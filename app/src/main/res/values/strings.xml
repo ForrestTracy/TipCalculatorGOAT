@@ -1,6 +1,10 @@
 <resources>
-    <string name="app_name">Greatest of All Time Tip Calculator</string>
-    <string name="restaurant_tab_text">Restaurant</string>
+    <string name="app_name">Greatest Tip Calculator of All Time</string>
+    <string name="food_tab_text">Food</string>
     <string name="hair_tab_text">Hair</string>
     <string name="ride_tab_text">Ride</string>
+    <string name="enter_bill_text">total bill amount</string>
+    <string name="service_quality_text">quality of service</string>
+    <string name="total_text">total</string>
+
 </resources>

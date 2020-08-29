@@ -12,7 +12,7 @@ import com.tracytech.goattipcalculator.ui.main.SectionsPagerAdapter
 class MainActivity : AppCompatActivity() {
 
     private val TAB_TITLES = arrayOf(
-        R.string.restaurant_tab_text,
+        R.string.food_tab_text,
         R.string.hair_tab_text,
         R.string.ride_tab_text
     )

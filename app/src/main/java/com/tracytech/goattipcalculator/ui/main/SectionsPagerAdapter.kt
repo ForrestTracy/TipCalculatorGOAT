@@ -9,7 +9,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.tracytech.goattipcalculator.R
 
 private val TAB_TITLES = arrayOf(
-        R.string.restaurant_tab_text,
+        R.string.food_tab_text,
         R.string.hair_tab_text,
         R.string.ride_tab_text
 )
@@ -25,9 +25,15 @@ class SectionsPagerAdapter(private val context: Context, fm: FragmentManager, li
     }
 
     override fun createFragment(position: Int): Fragment {
-        // position1 = restaurant
+        // position1 = food
         // position1 = hair
         // position1 = ride
-        return PlaceholderFragment.newInstance(position + 1)
+        when (position) {
+            0 -> return FoodFragment.newInstance()
+            1 -> return PlaceholderFragment.newInstance(position + 1)
+            else -> {
+                return PlaceholderFragment.newInstance(position + 1)
+            }
+        }
     }
 }

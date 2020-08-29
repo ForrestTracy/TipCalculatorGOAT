@@ -17,6 +17,8 @@
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
 
+<!--        TODO figure out how to have this ToolBar as an image  -->
+
         <TextView
             android:id="@+id/title"
             android:layout_width="wrap_content"
