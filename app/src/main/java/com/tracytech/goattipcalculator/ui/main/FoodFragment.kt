@@ -19,22 +19,34 @@ private const val ARG_PARAM2 = "param2"
  * Use the [FoodFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class FoodFragment : Fragment() {
+class FoodFragment : Fragment(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val calcTotalButton = (Button) findViewById(R.id.calculate_total_button);
-        calcTotalButton.setOnClickListener() {
-            calculateTotal()
-        }
+//        val calcTotalButton = (Button) findViewById(R.id.calculate_total_button);
+        // might be a good solution example :  https://gist.github.com/EmmanuelGuther/1fde5cfbd1cdcd21cd852e3bb5716e02
+//        R.id.calculate_total_button.setOnClickListener() {
+//            calculateTotal()
+//        }
     }
 
-    override fun onCreateView(
+    override fun onCreateView (
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_food, container, false)
+//        return inflater.inflate(R.layout.fragment_food, container, false)
+
+//        val view: View = inflater!!.inflate(R.layout.fragment, container, false)
+        val view: View = inflater.inflate(R.layout.fragment_food, container, false)
+//        val btn: Button = view.find(R.id.calculate_total_button)
+        val btn: Button = view.findViewById(R.id.calculate_total_button)
+        btn.setOnClickListener(this)
+        return view
+    }
+
+    override fun onClick(v: View?) {
+        println("hello there ******************** ")
     }
 
     fun calculateTotal(): Int {
