@@ -1,18 +1,21 @@
 package com.tracytech.goattipcalculator.ui.main
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
+import android.widget.*
+import androidx.fragment.app.Fragment
 import com.tracytech.goattipcalculator.R
 import kotlinx.android.synthetic.main.fragment_food.*
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
+
+private var total : Double = 0.00;
 
 /**
  * A simple [Fragment] subclass.
@@ -21,37 +24,72 @@ private const val ARG_PARAM2 = "param2"
  */
 class FoodFragment : Fragment(), View.OnClickListener {
 
+    private lateinit var calculatedTotal: TextView
+
+
+    private var tipPercentage: Double = 15.00
+
+//    enum class QualityOfSvc(val value: String) {
+//        POOR("poor"), FAIR("fair"), GOOD("good"), EXCELLENT("excellent")
+//    }
+
+    enum class QualityOfSvc { POOR, FAIR, GOOD, EXCELLENT, CUSTOM }
+
+//    val qualityToPercentage = mapOf(QualityOfSvc.POOR to 10, QualityOfSvc.FAIR to 15, QualityOfSvc.GOOD to 20, QualityOfSvc.EXCELLENT to 25)
+    val qualityToPercentage = arrayOf(25.00, 20.00, 15.00, 10.00)
+    private val qualityToName = mapOf(QualityOfSvc.POOR to "poor", QualityOfSvc.FAIR to "fair", QualityOfSvc.GOOD to "good", QualityOfSvc.EXCELLENT to "excellent")
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        val calcTotalButton = (Button) findViewById(R.id.calculate_total_button);
-        // might be a good solution example :  https://gist.github.com/EmmanuelGuther/1fde5cfbd1cdcd21cd852e3bb5716e02
-//        R.id.calculate_total_button.setOnClickListener() {
-//            calculateTotal()
-//        }
     }
 
     override fun onCreateView (
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-//        return inflater.inflate(R.layout.fragment_food, container, false)
-
-//        val view: View = inflater!!.inflate(R.layout.fragment, container, false)
         val view: View = inflater.inflate(R.layout.fragment_food, container, false)
-//        val btn: Button = view.find(R.id.calculate_total_button)
         val btn: Button = view.findViewById(R.id.calculate_total_button)
+//        val calculatedTotal: TextView = view.findViewById(R.id.calculated_total)
+        calculatedTotal = view.findViewById(R.id.calculated_total)
+        calculatedTotal.text = getString(R.string.total_text)
+
+        val dropdown = view.findViewById<Spinner>(R.id.quality_drop_down)
+        // might need something like this: https://stackoverflow.com/a/5357531/3288258  for the input numbers field
+        val dropDownOptions = arrayOf(qualityToName[QualityOfSvc.EXCELLENT], qualityToName[QualityOfSvc.GOOD], qualityToName[QualityOfSvc.FAIR],  qualityToName[QualityOfSvc.POOR])
+        val adapter = context?.let {
+            ArrayAdapter<String>(it, android.R.layout.simple_spinner_item, dropDownOptions)
+        }
+        dropdown.adapter = adapter
+
+        dropdown.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(arg0: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                println("you chose  service. ++++++++++++++++++++++++++++++++++++++++ id: $id     position: $position")
+                tipPercentage = qualityToPercentage[position]
+            }
+
+            override fun onNothingSelected(arg0: AdapterView<*>?) {
+                tipPercentage = 15.00
+            }
+        }
+
+
         btn.setOnClickListener(this)
         return view
     }
 
     override fun onClick(v: View?) {
-        println("hello there ******************** ")
+        total = calculateTotal()
+        println("total is ************************************* " + total)
+        calculatedTotal.text =  total.toString()
     }
 
-    fun calculateTotal(): Int {
+    fun calculateTotal(): Double {
         val baseBill = base_bill_input.text.toString().trim().toInt()
-        val tipAmount = service_quality_input.text.toString().trim().toInt()
+//        val tipAmount = service_quality_input.text.toString().trim().toInt()
+        val tipAmount : Double = baseBill * (tipPercentage / 100)
+        println("------------  base bill: $baseBill")
+        println("------------  tipAmount bill: $tipAmount")
         return baseBill + tipAmount
     }
 
@@ -68,24 +106,5 @@ class FoodFragment : Fragment(), View.OnClickListener {
 //                }
             }
     }
-
-//    textField.setEndIconOnClickListener {
-//        // Respond to end icon presses
-//    }
-//
-//    textField.addOnEditTextAttachedListener {
-//        // If any specific changes should be done when the edit text is attached (and
-//        // thus when the trailing icon is added to it), set an
-//        // OnEditTextAttachedListener.
-//
-//        // Example: The clear text icon's visibility behavior depends on whether the
-//        // EditText has input present. Therefore, an OnEditTextAttachedListener is set
-//        // so things like editText.getText() can be called.
-//    }
-//
-//    textField.addOnEndIconChangedListener
-//    {
-//
-//    }
 
 }
