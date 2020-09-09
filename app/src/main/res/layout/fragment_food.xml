@@ -31,29 +31,6 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-<!--    <com.google.android.material.textfield.TextInputLayout-->
-<!--        android:id="@+id/service_quality_field"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="8dp"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/base_bill_field"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        android:layout_marginStart="8dp"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        android:layout_marginEnd="8dp">-->
-
-<!--        <com.google.android.material.textfield.TextInputEditText-->
-<!--            android:id="@+id/service_quality_input"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:hint="@string/service_quality_text"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintHorizontal_bias="0.0"-->
-<!--            app:layout_constraintLeft_toLeftOf="parent"-->
-<!--            app:layout_constraintRight_toRightOf="parent" />-->
-
-<!--    </com.google.android.material.textfield.TextInputLayout>-->
-
     <Spinner
         android:id="@+id/quality_drop_down"
         android:layout_width="match_parent"
@@ -76,7 +53,7 @@
         tools:layout_marginRight="15dp" />
 
     <TextView
-        android:id="@+id/calculated_total"
+        android:id="@+id/calculated_total_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/calculate_total_button"
@@ -90,7 +67,49 @@
 <!--        android:text="@string/service_quality_text"-->
 <!--        android:text="@string/total_text"-->
 
+    <LinearLayout
+        app:layout_constraintTop_toBottomOf="@+id/calculated_total_view"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:orientation="horizontal"
+        android:background="@android:drawable/bottom_bar"
+        android:paddingLeft="4.0dip"
+        android:paddingTop="5.0dip"
+        android:paddingRight="4.0dip"
+        android:paddingBottom="1.0dip"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/calculated_total_view">
 
+        <Button
+            android:id="@+id/excellent"
+            android:layout_width="0.0dip"
+            android:layout_height="fill_parent"
+            android:text="EXCELLENT"
+            android:layout_weight="1.0" />
+
+        <Button
+            android:id="@+id/good"
+            android:layout_width="0.0dip"
+            android:layout_height="fill_parent"
+            android:text="GOOD"
+            android:layout_weight="1.0" />
+
+        <Button
+            android:id="@+id/fair"
+            android:layout_width="0.0dip"
+            android:layout_height="fill_parent"
+            android:text="FAIR"
+            android:layout_weight="1.0" />
+
+        <Button
+            android:id="@+id/poor"
+            android:layout_width="0.0dip"
+            android:layout_height="fill_parent"
+            android:text="POOR"
+            android:layout_weight="1.0" />
+    </LinearLayout>
+    
 </androidx.constraintlayout.widget.ConstraintLayout>
 
 <!--  great resource ->  https://material.io/develop/android/components/text-fields   -->

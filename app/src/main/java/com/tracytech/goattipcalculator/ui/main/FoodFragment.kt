@@ -50,8 +50,7 @@ class FoodFragment : Fragment(), View.OnClickListener {
     ): View? {
         val view: View = inflater.inflate(R.layout.fragment_food, container, false)
         val btn: Button = view.findViewById(R.id.calculate_total_button)
-//        val calculatedTotal: TextView = view.findViewById(R.id.calculated_total)
-        calculatedTotal = view.findViewById(R.id.calculated_total)
+        calculatedTotal = view.findViewById(R.id.calculated_total_view)
         calculatedTotal.text = getString(R.string.total_text)
 
         val dropdown = view.findViewById<Spinner>(R.id.quality_drop_down)
@@ -64,7 +63,6 @@ class FoodFragment : Fragment(), View.OnClickListener {
 
         dropdown.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(arg0: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                println("you chose  service. ++++++++++++++++++++++++++++++++++++++++ id: $id     position: $position")
                 tipPercentage = qualityToPercentage[position]
             }
 
@@ -80,16 +78,12 @@ class FoodFragment : Fragment(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         total = calculateTotal()
-        println("total is ************************************* " + total)
         calculatedTotal.text =  total.toString()
     }
 
     fun calculateTotal(): Double {
         val baseBill = base_bill_input.text.toString().trim().toInt()
-//        val tipAmount = service_quality_input.text.toString().trim().toInt()
         val tipAmount : Double = baseBill * (tipPercentage / 100)
-        println("------------  base bill: $baseBill")
-        println("------------  tipAmount bill: $tipAmount")
         return baseBill + tipAmount
     }
 
