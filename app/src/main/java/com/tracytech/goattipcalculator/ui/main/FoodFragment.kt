@@ -27,7 +27,7 @@ class FoodFragment : Fragment(), View.OnClickListener {
     private lateinit var calculatedTotal: TextView
 
 
-    private var tipPercentage: Double = 15.00
+//    private var tipPercentage: Double = 15.00
 
 //    enum class QualityOfSvc(val value: String) {
 //        POOR("poor"), FAIR("fair"), GOOD("good"), EXCELLENT("excellent")
@@ -49,11 +49,14 @@ class FoodFragment : Fragment(), View.OnClickListener {
         savedInstanceState: Bundle?
     ): View? {
         val view: View = inflater.inflate(R.layout.fragment_food, container, false)
-        val btn: Button = view.findViewById(R.id.calculate_total_button)
+        val superbBtn: Button = view.findViewById(R.id.superb_button)
+        val goodBtn: Button = view.findViewById(R.id.good_button)
+        val fairBtn: Button = view.findViewById(R.id.fair_button)
+        val poorBtn: Button = view.findViewById(R.id.poor_button)
         calculatedTotal = view.findViewById(R.id.calculated_total_view)
         calculatedTotal.text = getString(R.string.total_text)
 
-        val dropdown = view.findViewById<Spinner>(R.id.quality_drop_down)
+/*        val dropdown = view.findViewById<Spinner>(R.id.quality_drop_down)
         // might need something like this: https://stackoverflow.com/a/5357531/3288258  for the input numbers field
         val dropDownOptions = arrayOf(qualityToName[QualityOfSvc.EXCELLENT], qualityToName[QualityOfSvc.GOOD], qualityToName[QualityOfSvc.FAIR],  qualityToName[QualityOfSvc.POOR])
         val adapter = context?.let {
@@ -70,18 +73,29 @@ class FoodFragment : Fragment(), View.OnClickListener {
                 tipPercentage = 15.00
             }
         }
+        */
 
 
-        btn.setOnClickListener(this)
+        superbBtn.setOnClickListener(this)
+        goodBtn.setOnClickListener(this)
+        fairBtn.setOnClickListener(this)
+        poorBtn.setOnClickListener(this)
         return view
     }
 
-    override fun onClick(v: View?) {
-        total = calculateTotal()
+    override fun onClick(view: View?) {
+        var tipPercentage = when (view) {
+            superb_button -> 25.00
+            good_button   -> 20.00
+            fair_button   -> 15.00
+            poor_button   -> 10.00
+            else -> 15.00
+        }
+        total = calculateTotal(tipPercentage)
         calculatedTotal.text =  total.toString()
     }
 
-    fun calculateTotal(): Double {
+    fun calculateTotal(tipPercentage: Double): Double {
         val baseBill = base_bill_input.text.toString().trim().toInt()
         val tipAmount : Double = baseBill * (tipPercentage / 100)
         return baseBill + tipAmount

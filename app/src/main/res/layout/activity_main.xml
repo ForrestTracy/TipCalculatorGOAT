@@ -13,34 +13,28 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <com.google.android.material.appbar.AppBarLayout
+        android:background="@android:color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
 
 <!--        TODO figure out how to have this ToolBar as an image  -->
 
-        <TextView
-            android:id="@+id/title"
+        <ImageView
+            android:id="@+id/title_banner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:gravity="top"
             android:minHeight="?actionBarSize"
-            android:padding="@dimen/appbar_padding"
-            android:text="@string/app_name"
-            android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title" />
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/banner"
+            />
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary" />
+            android:background="@android:color/darker_gray" />
     </com.google.android.material.appbar.AppBarLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
