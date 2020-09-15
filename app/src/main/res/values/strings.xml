@@ -5,6 +5,6 @@
     <string name="ride_tab_text">Ride</string>
     <string name="enter_bill_text">total bill amount</string>
     <string name="service_quality_text">quality of service</string>
-    <string name="total_text">total</string>
+    <string name="default_total_text">$ _ . _ _</string>
 
 </resources>

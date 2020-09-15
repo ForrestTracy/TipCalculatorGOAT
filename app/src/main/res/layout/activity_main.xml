@@ -18,17 +18,14 @@
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
 
-<!--        TODO figure out how to have this ToolBar as an image  -->
-
         <ImageView
             android:id="@+id/title_banner"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="112dp"
+            android:contentDescription="@string/app_name"
             android:gravity="top"
             android:minHeight="?actionBarSize"
-            android:contentDescription="@string/app_name"
-            android:src="@drawable/banner"
-            />
+            android:src="@drawable/banner" />
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabs"

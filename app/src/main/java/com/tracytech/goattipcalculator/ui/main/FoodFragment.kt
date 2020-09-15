@@ -53,28 +53,8 @@ class FoodFragment : Fragment(), View.OnClickListener {
         val goodBtn: Button = view.findViewById(R.id.good_button)
         val fairBtn: Button = view.findViewById(R.id.fair_button)
         val poorBtn: Button = view.findViewById(R.id.poor_button)
-        calculatedTotal = view.findViewById(R.id.calculated_total_view)
-        calculatedTotal.text = getString(R.string.total_text)
-
-/*        val dropdown = view.findViewById<Spinner>(R.id.quality_drop_down)
-        // might need something like this: https://stackoverflow.com/a/5357531/3288258  for the input numbers field
-        val dropDownOptions = arrayOf(qualityToName[QualityOfSvc.EXCELLENT], qualityToName[QualityOfSvc.GOOD], qualityToName[QualityOfSvc.FAIR],  qualityToName[QualityOfSvc.POOR])
-        val adapter = context?.let {
-            ArrayAdapter<String>(it, android.R.layout.simple_spinner_item, dropDownOptions)
-        }
-        dropdown.adapter = adapter
-
-        dropdown.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(arg0: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                tipPercentage = qualityToPercentage[position]
-            }
-
-            override fun onNothingSelected(arg0: AdapterView<*>?) {
-                tipPercentage = 15.00
-            }
-        }
-        */
-
+        calculatedTotal = view.findViewById(R.id.calculated_total_value)
+        calculatedTotal.text = getString(R.string.default_total_text)
 
         superbBtn.setOnClickListener(this)
         goodBtn.setOnClickListener(this)
@@ -92,7 +72,7 @@ class FoodFragment : Fragment(), View.OnClickListener {
             else -> 15.00
         }
         total = calculateTotal(tipPercentage)
-        calculatedTotal.text =  total.toString()
+        calculatedTotal.text = "$ $total"
     }
 
     fun calculateTotal(tipPercentage: Double): Double {
