@@ -62,92 +62,83 @@
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 
-    <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/service_grid"
-        app:layout_constraintTop_toBottomOf="@+id/base_bill_wrapper"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/service_text"
+        app:layout_constraintTop_toBottomOf="@id/base_bill_wrapper"
         android:layout_height="wrap_content"
-        android:paddingTop="15.0dip"
-        android:columnCount="3"
-        android:rowCount="5"
-        android:orientation="horizontal"
-        tools:context=".GridXMLActivity" >
-        <TextView
-            android:id="@+id/service_grid_text"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:text="SERVICE"
-            android:textColor="@android:color/black"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            android:shadowColor="@android:color/darker_gray"
-            android:shadowDx="5"
-            android:shadowDy="5"
-            android:shadowRadius="2"
-            android:layout_column="0"
-            android:layout_row="1"/>
-        <TextView
-            android:id="@+id/quality_grid_text"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:text="QUALITY"
-            android:textColor="@android:color/black"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            android:shadowColor="@android:color/darker_gray"
-            android:shadowDx="5"
-            android:shadowDy="5"
-            android:shadowRadius="2"
-            android:layout_column="0"
-            android:layout_row="2"/>
+        android:layout_width="match_parent"
+        android:gravity="center_horizontal"
+        android:text="SERVICE QUALITY"
+        android:textColor="@android:color/black"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:shadowColor="@android:color/darker_gray"
+        android:shadowDx="5"
+        android:shadowDy="5"
+        android:shadowRadius="1"
+
+        android:layout_columnSpan="5"
+        android:layout_column="0"
+        android:layout_row="0"/>
+
+    <LinearLayout
+        android:id="@+id/tip_button_wrapper"
+        app:layout_constraintTop_toBottomOf="@id/service_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
         <Button
             android:id="@+id/superb_button"
-            android:layout_gravity="left|top"
-            android:text="SUPERB"
-            android:layout_column="1"
-            android:layout_row="0"
-            android:backgroundTint="@android:color/holo_green_dark"/>
+            android:text="superb"
+            android:backgroundTint="@android:color/holo_green_dark"
+            android:minHeight="70dp"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:src="@drawable/banner"/>
 
         <Button
             android:id="@+id/good_button"
-            android:layout_gravity="left|top"
-            android:text="GOOD"
-            android:layout_column="1"
-            android:layout_row="1"
-            android:backgroundTint="@android:color/holo_green_light" />
+            android:text="good"
+            android:backgroundTint="@android:color/holo_green_light"
+            android:minHeight="70dp"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"/>
 
         <Button
             android:id="@+id/fair_button"
-            android:layout_gravity="left|top"
-            android:text="FAIR"
-            android:layout_column="1"
-            android:layout_row="2"/>
+            android:text="fair"
+            android:minHeight="70dp"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"/>
 
         <Button
             android:id="@+id/poor_button"
-            android:layout_gravity="left|top"
-            android:text="POOR"
-            android:layout_column="1"
-            android:layout_row="3"
-            android:backgroundTint="@android:color/holo_red_light" />
-
+            android:text="poor"
+            android:backgroundTint="@android:color/holo_red_light"
+            android:minHeight="70dp"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"/>
         <Button
             android:id="@+id/custom_button"
-            android:layout_gravity="left|top"
             android:textStyle="italic"
-            android:text="CUSTOM"
-            android:layout_column="1"
-            android:layout_row="4"
-            android:backgroundTint="@android:color/white" />
-    </GridLayout>
+            android:text="custom"
+            android:backgroundTint="@android:color/white"
+            android:minHeight="70dp"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"/>
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/calculated_total_wrapper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        app:layout_constraintTop_toBottomOf="@+id/service_grid"
+        app:layout_constraintTop_toBottomOf="@+id/tip_button_wrapper"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent">
 
