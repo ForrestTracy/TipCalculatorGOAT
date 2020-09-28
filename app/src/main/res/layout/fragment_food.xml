@@ -89,46 +89,42 @@
 
         <Button
             android:id="@+id/superb_button"
-            android:text="superb"
-            android:backgroundTint="@android:color/holo_green_dark"
-            android:minHeight="70dp"
-            android:layout_height="wrap_content"
+            android:text=""
+            android:background="@drawable/superb_button"
+            android:layout_height="70dp"
             android:layout_width="0dp"
-            android:layout_weight="1"
-            android:src="@drawable/banner"/>
+            android:layout_weight="1" />
 
         <Button
             android:id="@+id/good_button"
-            android:text="good"
-            android:backgroundTint="@android:color/holo_green_light"
-            android:minHeight="70dp"
-            android:layout_height="wrap_content"
+            android:text=""
+            android:background="@drawable/good_button"
+            android:layout_height="70dp"
             android:layout_width="0dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
 
         <Button
             android:id="@+id/fair_button"
-            android:text="fair"
-            android:minHeight="70dp"
-            android:layout_height="wrap_content"
+            android:text=""
+            android:background="@drawable/fair_button"
+            android:layout_height="70dp"
+            android:layout_width="0dp"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/poor_button"
+            android:text=""
+            android:background="@drawable/poor_button"
+            android:layout_height="70dp"
             android:layout_width="0dp"
             android:layout_weight="1"/>
 
         <Button
-            android:id="@+id/poor_button"
-            android:text="poor"
-            android:backgroundTint="@android:color/holo_red_light"
-            android:minHeight="70dp"
-            android:layout_height="wrap_content"
-            android:layout_width="0dp"
-            android:layout_weight="1"/>
-        <Button
             android:id="@+id/custom_button"
             android:textStyle="italic"
-            android:text="custom"
-            android:backgroundTint="@android:color/white"
-            android:minHeight="70dp"
-            android:layout_height="wrap_content"
+            android:text=""
+            android:background="@drawable/custom_button"
+            android:layout_height="70dp"
             android:layout_width="0dp"
             android:layout_weight="1"/>
     </LinearLayout>
