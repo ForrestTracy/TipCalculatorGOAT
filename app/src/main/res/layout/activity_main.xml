@@ -13,21 +13,31 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <com.google.android.material.appbar.AppBarLayout
-        android:background="@android:color/white"
+        android:background="#aedef2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
 
+        <!-- banner:
+                background = #262626
+                top font   = Shree Devengari 714
+                under font = Lucida Calligraphy
+         -->
         <ImageView
             android:id="@+id/title_banner"
             android:layout_width="wrap_content"
-            android:layout_height="112dp"
+            android:layout_height="70dp"
+            android:background="@color/colorPrimaryDark"
+            android:paddingTop="5dp"
             android:contentDescription="@string/app_name"
-            android:gravity="top"
-            android:minHeight="?actionBarSize"
+            android:scaleType="fitXY"
             android:src="@drawable/banner" />
 
         <com.google.android.material.tabs.TabLayout
+            app:tabIconTint="#000000"
+            app:tabIndicatorColor="#616263"
+            app:tabIndicatorHeight="5dp"
+            app:tabTextColor="#000000"
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

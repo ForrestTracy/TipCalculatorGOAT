@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.main.FoodFragment">
+    tools:context=".ui.main.FoodFragment"
+    android:background="#efedf5">
 
     <LinearLayout
         android:id="@+id/base_bill_wrapper"
@@ -23,21 +24,15 @@
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:paddingTop="15.0dip"
-            android:shadowColor="@android:color/darker_gray"
-            android:shadowDx="5"
-            android:shadowDy="5"
-            android:shadowRadius="2"
-            android:text="BASE BILL"
+            android:text="@string/base_bill_text"
             android:textColor="@android:color/black"
             android:textSize="30sp"
-            android:textStyle="bold"
-            app:layout_constraintHorizontal_bias="0.054"
+            android:fontFamily="sans-serif-light"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:layout_marginLeft="25dp"
-            tools:layout_marginRight="15dp" />
+            android:layout_marginStart="10dp" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/base_bill_field"
@@ -64,28 +59,25 @@
 
     <TextView
         android:id="@+id/service_text"
-        app:layout_constraintTop_toBottomOf="@id/base_bill_wrapper"
-        android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:gravity="center_horizontal"
-        android:text="SERVICE QUALITY"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:gravity="left"
+        android:shadowColor="@android:color/darker_gray"
+        android:text="@string/service_quality_text"
         android:textColor="@android:color/black"
         android:textSize="30sp"
-        android:textStyle="bold"
-        android:shadowColor="@android:color/darker_gray"
-        android:shadowDx="5"
-        android:shadowDy="5"
-        android:shadowRadius="1"
-
-        android:layout_columnSpan="5"
-        android:layout_column="0"
-        android:layout_row="0"/>
+        android:fontFamily="sans-serif-light"
+        app:layout_constraintTop_toBottomOf="@id/base_bill_wrapper"
+        tools:layout_editor_absoluteX="10dp" />
 
     <LinearLayout
         android:id="@+id/tip_button_wrapper"
         app:layout_constraintTop_toBottomOf="@id/service_text"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp">
 
         <Button
             android:id="@+id/superb_button"
@@ -93,7 +85,8 @@
             android:background="@drawable/superb_button"
             android:layout_height="70dp"
             android:layout_width="0dp"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:layout_marginHorizontal="2dp"/>
 
         <Button
             android:id="@+id/good_button"
@@ -101,7 +94,8 @@
             android:background="@drawable/good_button"
             android:layout_height="70dp"
             android:layout_width="0dp"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:layout_marginHorizontal="2dp"/>
 
         <Button
             android:id="@+id/fair_button"
@@ -109,7 +103,8 @@
             android:background="@drawable/fair_button"
             android:layout_height="70dp"
             android:layout_width="0dp"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:layout_marginHorizontal="2dp"/>
 
         <Button
             android:id="@+id/poor_button"
@@ -117,7 +112,8 @@
             android:background="@drawable/poor_button"
             android:layout_height="70dp"
             android:layout_width="0dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:layout_marginHorizontal="2dp"/>
 
         <Button
             android:id="@+id/custom_button"
@@ -126,35 +122,31 @@
             android:background="@drawable/custom_button"
             android:layout_height="70dp"
             android:layout_width="0dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:layout_marginHorizontal="2dp"/>
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/calculated_total_wrapper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
+        android:gravity="start"
         app:layout_constraintTop_toBottomOf="@+id/tip_button_wrapper"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent">
 
         <TextView
             android:id="@+id/calculated_total_text"
-            android:text="TOTAL"
-            android:textSize="30sp"
-            android:textStyle="bold"
+            android:text="@string/total_text"
             android:textColor="@android:color/black"
-            android:shadowColor="@android:color/darker_gray"
-            android:shadowDx="5"
-            android:shadowDy="5"
+            android:textSize="30sp"
+            android:fontFamily="sans-serif-light"
             android:shadowRadius="2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="15.0dip"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            tools:layout_marginLeft="25dp"
-            tools:layout_marginRight="15dp" />
+            tools:layout_marginRight="15dp"
+            android:layout_marginStart="10dp"/>
         <TextView
             android:id="@+id/calculated_total_value"
             android:text="$0.00"

@@ -3,8 +3,9 @@
     <string name="food_tab_text">Food</string>
     <string name="hair_tab_text">Hair</string>
     <string name="ride_tab_text">Ride</string>
-    <string name="enter_bill_text">total bill amount</string>
-    <string name="service_quality_text">quality of service</string>
+    <string name="base_bill_text">base bill</string>
+    <string name="service_quality_text">service quality</string>
+    <string name="total_text">total</string>
     <string name="default_total_text">$ _ . _ _</string>
 
 </resources>
