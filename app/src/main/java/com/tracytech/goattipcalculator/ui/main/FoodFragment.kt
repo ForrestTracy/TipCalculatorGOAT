@@ -1,11 +1,13 @@
 package com.tracytech.goattipcalculator.ui.main
 
+import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
+import com.google.android.material.tabs.TabLayout
 import com.tracytech.goattipcalculator.R
 import kotlinx.android.synthetic.main.fragment_food.*
 
@@ -79,6 +81,12 @@ class FoodFragment : Fragment(), View.OnClickListener {
         val baseBill = base_bill_input.text.toString().trim().toInt()
         val tipAmount : Double = baseBill * (tipPercentage / 100)
         return baseBill + tipAmount
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val tabs: TabLayout? = (context as Activity).findViewById(R.id.tabs)
+        tabs?.setSelectedTabIndicatorColor(resources.getColor(R.color.blue4))
     }
 
     companion object {

@@ -26,6 +26,10 @@ class MainActivity : AppCompatActivity() {
         val tabs: TabLayout = findViewById(R.id.tabs)
         TabLayoutMediator(tabs, viewPager) { tab, position ->
             tab.text = (resources.getString(TAB_TITLES[position]))
+//            when (position) {
+//                  0 ->  tabs.setSelectedTabIndicatorColor(resources.getColor(R.color.blue4))
+////                1 ->  tabs.setSelectedTabIndicatorColor(resources.getColor(R.color.blue1)) // sets to the last one. Not sure why
+//            }
         }.attach()
 
 //        val fab: FloatingActionButton = findViewById(R.id.fab)

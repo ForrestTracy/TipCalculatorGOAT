@@ -1,5 +1,6 @@
 package com.tracytech.goattipcalculator.ui.main
 
+import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.google.android.material.tabs.TabLayout
 import com.tracytech.goattipcalculator.R
 
 /**
@@ -47,5 +49,11 @@ class PlaceholderFragment : Fragment() {
                 }
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val tabs: TabLayout? = (context as Activity).findViewById(R.id.tabs)
+        tabs?.setSelectedTabIndicatorColor(resources.getColor(R.color.blue2))
     }
 }
