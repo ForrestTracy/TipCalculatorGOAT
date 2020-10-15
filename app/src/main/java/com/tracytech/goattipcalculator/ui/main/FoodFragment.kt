@@ -27,9 +27,7 @@ private var total : Double = 0.00;
 class FoodFragment : Fragment(), View.OnClickListener {
 
     private lateinit var calculatedTotal: TextView
-
-
-//    private var tipPercentage: Double = 15.00
+    private lateinit var tipPercentageInput: TextView
 
 //    enum class QualityOfSvc(val value: String) {
 //        POOR("poor"), FAIR("fair"), GOOD("good"), EXCELLENT("excellent")
@@ -55,13 +53,19 @@ class FoodFragment : Fragment(), View.OnClickListener {
         val goodBtn: Button = view.findViewById(R.id.good_button)
         val fairBtn: Button = view.findViewById(R.id.fair_button)
         val poorBtn: Button = view.findViewById(R.id.poor_button)
+        val customBtn: Button = view.findViewById(R.id.custom_button)
         calculatedTotal = view.findViewById(R.id.calculated_total_value)
         calculatedTotal.text = getString(R.string.default_total_text)
+//        tipPercentageTextView = view.findViewById(R.id.tip_value)
+        tipPercentageInput = view.findViewById(R.id.tip_input_field)
+        tipPercentageInput.isFocusableInTouchMode = true
+        tipPercentageInput.text = "  "
 
         superbBtn.setOnClickListener(this)
         goodBtn.setOnClickListener(this)
         fairBtn.setOnClickListener(this)
         poorBtn.setOnClickListener(this)
+        customBtn.setOnClickListener(this)
         return view
     }
 
@@ -71,14 +75,25 @@ class FoodFragment : Fragment(), View.OnClickListener {
             good_button   -> 20.00
             fair_button   -> 15.00
             poor_button   -> 10.00
+            custom_button -> 0.00
             else -> 15.00
         }
         total = calculateTotal(tipPercentage)
+        tipPercentageInput.text = "$tipPercentage "
+        if (view == custom_button) {
+            tipPercentageInput.text = ""
+            tipPercentageInput.requestFocus()
+        }
         calculatedTotal.text = "$ $total"
     }
 
+    // TODO recalculate every time tip field or base_bill field is changed
     fun calculateTotal(tipPercentage: Double): Double {
-        val baseBill = base_bill_input.text.toString().trim().toInt()
+        var baseBill: Int
+        // TODO add numeric check on base_bill_input
+        if (base_bill_input != null && !base_bill_input.text.isNullOrEmpty()) {
+            baseBill = base_bill_input.text.toString().trim().toInt()
+        } else return 0.00
         val tipAmount : Double = baseBill * (tipPercentage / 100)
         return baseBill + tipAmount
     }
@@ -90,17 +105,8 @@ class FoodFragment : Fragment(), View.OnClickListener {
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of this fragment.
-         */
         @JvmStatic
-        fun newInstance() =
-            FoodFragment().apply {
-//                arguments = Bundle().apply {
-//                    putString(ARG_PARAM1, param1)
-//                    putString(ARG_PARAM2, param2)
-//                }
-            }
+        fun newInstance() = FoodFragment()
     }
 
 }
