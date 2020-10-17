@@ -12,7 +12,7 @@
         android:id="@+id/base_bill_wrapper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
+        android:gravity="start"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -22,7 +22,7 @@
             android:id="@+id/total_bill_amount_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
+            android:gravity="left"
             android:paddingTop="15.0dip"
             android:text="@string/base_bill_text"
             android:textColor="@android:color/black"
@@ -34,28 +34,29 @@
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginStart="10dp" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/base_bill_field"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/total_bill_amount_label"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:boxBackgroundMode="none"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp">
+<!--        <com.google.android.material.textfield.TextInputLayout-->
+<!--            android:id="@+id/base_bill_field"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            app:boxBackgroundMode="none"-->
+<!--            android:layout_marginStart="8dp"-->
+<!--            android:layout_marginEnd="8dp">-->
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/base_bill_input"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="$0.00"
-                android:inputType="numberSigned"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent" />
-        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/base_bill_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="numberSigned"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/total_bill_amount_label"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+<!--        </com.google.android.material.textfield.TextInputLayout>-->
     </LinearLayout>
 
     <TextView
@@ -127,72 +128,105 @@
             android:layout_marginHorizontal="2dp"/>
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/calculated_tip_wrapper"
+    <GridLayout
+        android:id="@+id/calculated_values_wrapper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="start"
-        app:layout_constraintTop_toBottomOf="@+id/tip_button_wrapper"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:orientation="horizontal">
+        android:useDefaultMargins="true"
+        android:alignmentMode="alignBounds"
+        android:columnOrderPreserved="false"
+        android:columnCount="5"
+        android:rowCount="5"
+        app:layout_constraintTop_toBottomOf="@+id/tip_button_wrapper">
 
         <TextView
+            android:layout_row="0"
+            android:layout_column="0"
             android:id="@+id/calculated_tip_title"
             android:text="@string/tip_title"
-            android:textSize="30sp"
             android:textColor="@android:color/black"
-            android:shadowColor="@android:color/darker_gray"
+            android:textSize="30sp"
+            android:fontFamily="sans-serif-light"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="15.0dip"
-            android:paddingLeft="15.0dip"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            tools:layout_marginLeft="25dp"
-            tools:layout_marginRight="15dp" />
-<!--        <com.google.android.material.textfield.TextInputLayout-->
-<!--            android:id="@+id/tip_percentage_input_layout"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            app:layout_constraintTop_toBottomOf="@+id/total_bill_amount_label"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="parent"-->
-<!--            android:layout_marginStart="8dp"-->
-<!--            android:layout_marginEnd="8dp">-->
+            tools:layout_marginRight="15dp"
+            android:layout_marginStart="10dp"/>
+        <LinearLayout
+            android:id="@+id/tip_percent_wrapper"
+            android:layout_row="0"
+            android:layout_column="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:orientation="horizontal" >
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/tip_input_field"
+                android:id="@+id/tip_input_percentage_field"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="numberSigned"
+                android:textSize="30sp"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent" />
-<!--        </com.google.android.material.textfield.TextInputLayout>-->
-        <TextView
-            android:id="@+id/tip_percentage_sign"
-            android:text=" %"
-            android:textSize="30sp"
-            android:textColor="@android:color/black"
-            android:shadowColor="@android:color/darker_gray"
+            <TextView
+                android:id="@+id/percent_sign"
+                android:text="%"
+                android:textColor="@android:color/black"
+                android:textSize="30sp"
+                android:fontFamily="sans-serif-light"
+                android:shadowRadius="2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="15.0dip"
+                tools:layout_marginRight="15dp"
+                android:layout_marginStart="10dp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/tip_dollars_wrapper"
+            android:layout_row="0"
+            android:layout_column="2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingTop="15.0dip"
+            android:gravity="start"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/calculated_total_wrapper"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="start"
-        app:layout_constraintTop_toBottomOf="@+id/calculated_tip_wrapper"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent">
-
+            app:layout_constraintRight_toRightOf="parent"
+            android:orientation="horizontal" >
+            <TextView
+                android:id="@+id/dollar_sign"
+                android:text="$"
+                android:textColor="@android:color/black"
+                android:textSize="30sp"
+                android:fontFamily="sans-serif-light"
+                android:shadowRadius="2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="15.0dip"
+                tools:layout_marginRight="15dp"
+                android:layout_marginStart="10dp"/>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tip_input_dollars_field"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="numberSigned"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent" />
+        </LinearLayout>
         <TextView
+            android:layout_row="1"
+            android:layout_column="0"
             android:id="@+id/calculated_total_title"
             android:text="@string/total_title"
             android:textColor="@android:color/black"
@@ -205,6 +239,8 @@
             tools:layout_marginRight="15dp"
             android:layout_marginStart="10dp"/>
         <TextView
+            android:layout_row="1"
+            android:layout_column="1"
             android:id="@+id/calculated_total_value"
             android:text="$0.00"
             android:textSize="30sp"
@@ -214,13 +250,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="15.0dip"
-            android:paddingLeft="15.0dip"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             tools:layout_marginLeft="25dp"
             tools:layout_marginRight="15dp" />
-
-    </LinearLayout>
-
+    </GridLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

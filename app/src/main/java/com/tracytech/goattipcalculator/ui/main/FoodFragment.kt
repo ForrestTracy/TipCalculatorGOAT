@@ -28,6 +28,7 @@ class FoodFragment : Fragment(), View.OnClickListener {
 
     private lateinit var calculatedTotal: TextView
     private lateinit var tipPercentageInput: TextView
+    private lateinit var tipDollarsInput: TextView
 
 //    enum class QualityOfSvc(val value: String) {
 //        POOR("poor"), FAIR("fair"), GOOD("good"), EXCELLENT("excellent")
@@ -57,9 +58,12 @@ class FoodFragment : Fragment(), View.OnClickListener {
         calculatedTotal = view.findViewById(R.id.calculated_total_value)
         calculatedTotal.text = getString(R.string.default_total_text)
 //        tipPercentageTextView = view.findViewById(R.id.tip_value)
-        tipPercentageInput = view.findViewById(R.id.tip_input_field)
+        tipPercentageInput = view.findViewById(R.id.tip_input_percentage_field)
         tipPercentageInput.isFocusableInTouchMode = true
         tipPercentageInput.text = "  "
+        tipDollarsInput = view.findViewById(R.id.tip_input_dollars_field)
+        tipDollarsInput.isFocusableInTouchMode = true
+        tipDollarsInput.text = "  "
 
         superbBtn.setOnClickListener(this)
         goodBtn.setOnClickListener(this)
@@ -79,7 +83,7 @@ class FoodFragment : Fragment(), View.OnClickListener {
             else -> 15.00
         }
         total = calculateTotal(tipPercentage)
-        tipPercentageInput.text = "$tipPercentage "
+        tipPercentageInput.text = "$tipPercentage"
         if (view == custom_button) {
             tipPercentageInput.text = ""
             tipPercentageInput.requestFocus()
