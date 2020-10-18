@@ -25,7 +25,7 @@ class SectionsPagerAdapter(private val context: Context, fm: FragmentManager, li
     }
 
     override fun createFragment(position: Int): Fragment {
-        // position1 = food, position2 = hair,  position3 = ride
+        // position1 = food  //  position2 = hair  //  position3 = ride
         return when (position) {
             0 -> FoodFragment.newInstance()
             1 -> PlaceholderFragment.newInstance(position + 1)

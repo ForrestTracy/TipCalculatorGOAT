@@ -2,33 +2,35 @@ package com.tracytech.goattipcalculator.ui.main
 
 import android.app.Activity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextUtils
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.Button
+import android.widget.TextView
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayout
 import com.tracytech.goattipcalculator.R
 import kotlinx.android.synthetic.main.fragment_food.*
 
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
 private var total : Double = 0.00;
 
-/**
- * A simple [Fragment] subclass.
- * Use the [FoodFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class FoodFragment : Fragment(), View.OnClickListener {
 
     private lateinit var calculatedTotal: TextView
     private lateinit var tipPercentageInput: TextView
     private lateinit var tipDollarsInput: TextView
+
+    private var tipPercentage : Double = 0.00
+
+    companion object {
+        @JvmStatic
+        fun newInstance() = FoodFragment()
+    }
 
 //    enum class QualityOfSvc(val value: String) {
 //        POOR("poor"), FAIR("fair"), GOOD("good"), EXCELLENT("excellent")
@@ -50,14 +52,10 @@ class FoodFragment : Fragment(), View.OnClickListener {
         savedInstanceState: Bundle?
     ): View? {
         val view: View = inflater.inflate(R.layout.fragment_food, container, false)
-        val superbBtn: Button = view.findViewById(R.id.superb_button)
-        val goodBtn: Button = view.findViewById(R.id.good_button)
-        val fairBtn: Button = view.findViewById(R.id.fair_button)
-        val poorBtn: Button = view.findViewById(R.id.poor_button)
-        val customBtn: Button = view.findViewById(R.id.custom_button)
+        setUpButtons(view)
+
         calculatedTotal = view.findViewById(R.id.calculated_total_value)
         calculatedTotal.text = getString(R.string.default_total_text)
-//        tipPercentageTextView = view.findViewById(R.id.tip_value)
         tipPercentageInput = view.findViewById(R.id.tip_input_percentage_field)
         tipPercentageInput.isFocusableInTouchMode = true
         tipPercentageInput.text = "  "
@@ -65,16 +63,34 @@ class FoodFragment : Fragment(), View.OnClickListener {
         tipDollarsInput.isFocusableInTouchMode = true
         tipDollarsInput.text = "  "
 
+        tipPercentageInput.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable) {
+                tipPercentage = if (s.toString().isEmpty()) 0.00 else  s.toString().toDouble()
+                calculatedTotal.text = "$ ${updateFields()}"
+            }
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+        })
+
+        return view
+    }
+
+    private fun setUpButtons(view: View) {
+        val superbBtn: Button = view.findViewById(R.id.superb_button)
+        val goodBtn: Button = view.findViewById(R.id.good_button)
+        val fairBtn: Button = view.findViewById(R.id.fair_button)
+        val poorBtn: Button = view.findViewById(R.id.poor_button)
+        val customBtn: Button = view.findViewById(R.id.custom_button)
+
         superbBtn.setOnClickListener(this)
         goodBtn.setOnClickListener(this)
         fairBtn.setOnClickListener(this)
         poorBtn.setOnClickListener(this)
         customBtn.setOnClickListener(this)
-        return view
     }
 
     override fun onClick(view: View?) {
-        var tipPercentage = when (view) {
+        tipPercentage = when (view) {
             superb_button -> 25.00
             good_button   -> 20.00
             fair_button   -> 15.00
@@ -82,8 +98,8 @@ class FoodFragment : Fragment(), View.OnClickListener {
             custom_button -> 0.00
             else -> 15.00
         }
-        total = calculateTotal(tipPercentage)
-        tipPercentageInput.text = "$tipPercentage"
+        total = updateFields()
+        tipPercentageInput.text = tipPercentage.toString()
         if (view == custom_button) {
             tipPercentageInput.text = ""
             tipPercentageInput.requestFocus()
@@ -91,14 +107,16 @@ class FoodFragment : Fragment(), View.OnClickListener {
         calculatedTotal.text = "$ $total"
     }
 
-    // TODO recalculate every time tip field or base_bill field is changed
-    fun calculateTotal(tipPercentage: Double): Double {
-        var baseBill: Int
-        // TODO add numeric check on base_bill_input
-        if (base_bill_input != null && !base_bill_input.text.isNullOrEmpty()) {
-            baseBill = base_bill_input.text.toString().trim().toInt()
-        } else return 0.00
+    private fun updateFields(): Double {
+        val baseBill: Int
+        if (base_bill_input != null
+            && !base_bill_input.text.isNullOrEmpty()
+            && TextUtils.isDigitsOnly(base_bill_input.text)) {
+                baseBill = base_bill_input.text.toString().trim().toInt()
+        } else
+                return 0.00
         val tipAmount : Double = baseBill * (tipPercentage / 100)
+        tipDollarsInput.text = tipAmount.toString()
         return baseBill + tipAmount
     }
 
@@ -106,11 +124,6 @@ class FoodFragment : Fragment(), View.OnClickListener {
         super.onResume()
         val tabs: TabLayout? = (context as Activity).findViewById(R.id.tabs)
         tabs?.setSelectedTabIndicatorColor(resources.getColor(R.color.blue4))
-    }
-
-    companion object {
-        @JvmStatic
-        fun newInstance() = FoodFragment()
     }
 
 }
