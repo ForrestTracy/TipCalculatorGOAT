@@ -21,6 +21,8 @@ private var total : Double = 0.00;
 
 class FoodFragment : Fragment(), View.OnClickListener {
 
+    // TODO should these fields move above class declaration?
+    private lateinit var baseBillInput: TextView
     private lateinit var calculatedTotal: TextView
     private lateinit var tipPercentageInput: TextView
     private lateinit var tipDollarsInput: TextView
@@ -32,15 +34,11 @@ class FoodFragment : Fragment(), View.OnClickListener {
         fun newInstance() = FoodFragment()
     }
 
-//    enum class QualityOfSvc(val value: String) {
-//        POOR("poor"), FAIR("fair"), GOOD("good"), EXCELLENT("excellent")
-//    }
-
-    enum class QualityOfSvc { POOR, FAIR, GOOD, EXCELLENT, CUSTOM }
-
+//    enum class QualityOfSvc(val value: String) {   POOR("poor"), FAIR("fair"), GOOD("good"), EXCELLENT("excellent") }
+//    enum class QualityOfSvc { POOR, FAIR, GOOD, EXCELLENT, CUSTOM }
 //    val qualityToPercentage = mapOf(QualityOfSvc.POOR to 10, QualityOfSvc.FAIR to 15, QualityOfSvc.GOOD to 20, QualityOfSvc.EXCELLENT to 25)
-    val qualityToPercentage = arrayOf(25.00, 20.00, 15.00, 10.00)
-    private val qualityToName = mapOf(QualityOfSvc.POOR to "poor", QualityOfSvc.FAIR to "fair", QualityOfSvc.GOOD to "good", QualityOfSvc.EXCELLENT to "excellent")
+//    val qualityToPercentage = arrayOf(25.00, 20.00, 15.00, 10.00)
+//    private val qualityToName = mapOf(QualityOfSvc.POOR to "poor", QualityOfSvc.FAIR to "fair", QualityOfSvc.GOOD to "good", QualityOfSvc.EXCELLENT to "excellent")
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,6 +52,7 @@ class FoodFragment : Fragment(), View.OnClickListener {
         val view: View = inflater.inflate(R.layout.fragment_food, container, false)
         setUpButtons(view)
 
+        baseBillInput = view.findViewById(R.id.base_bill_input)
         calculatedTotal = view.findViewById(R.id.calculated_total_value)
         calculatedTotal.text = getString(R.string.default_total_text)
         tipPercentageInput = view.findViewById(R.id.tip_input_percentage_field)
@@ -63,10 +62,26 @@ class FoodFragment : Fragment(), View.OnClickListener {
         tipDollarsInput.isFocusableInTouchMode = true
         tipDollarsInput.text = "  "
 
+        baseBillInput.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable) {
+                updateFieldsFromBaseBill()
+            }
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+        })
+
+        tipDollarsInput.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable) {
+//                updateFieldsFromTipDollars()  // TODO THIS IS BREAKING STUFF
+            }
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+        })
+
         tipPercentageInput.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable) {
                 tipPercentage = if (s.toString().isEmpty()) 0.00 else  s.toString().toDouble()
-                calculatedTotal.text = "$ ${updateFields()}"
+                updateFieldsFromTipPercentage()
             }
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
@@ -109,15 +124,52 @@ class FoodFragment : Fragment(), View.OnClickListener {
 
     private fun updateFields(): Double {
         val baseBill: Int
-        if (base_bill_input != null
-            && !base_bill_input.text.isNullOrEmpty()
-            && TextUtils.isDigitsOnly(base_bill_input.text)) {
+        if (base_bill_input != null && !base_bill_input.text.isNullOrEmpty() && TextUtils.isDigitsOnly(base_bill_input.text)) {
                 baseBill = base_bill_input.text.toString().trim().toInt()
-        } else
-                return 0.00
-        val tipAmount : Double = baseBill * (tipPercentage / 100)
-        tipDollarsInput.text = tipAmount.toString()
-        return baseBill + tipAmount
+        } else {
+            return 0.00
+        }
+        val tipDollars : Double = baseBill * (tipPercentage / 100)
+        tipDollarsInput.text = tipDollars.toString()
+        return baseBill + tipDollars
+    }
+
+    // THIS IS BREAKING STUFF
+    private fun updateFieldsFromTipDollars() {
+        var baseBill = 0
+        if (base_bill_input != null && !base_bill_input.text.isNullOrEmpty() && TextUtils.isDigitsOnly(base_bill_input.text)) {
+            baseBill = base_bill_input.text.toString().trim().toInt()
+        } else {
+            calculatedTotal.text = 0.00.toString()
+        }
+        val tipDollars : Double = tipDollarsInput.text.toString().trim().toDouble()
+        tipPercentageInput.text = (tipDollars % baseBill).toString()
+        calculatedTotal.text = (baseBill + tipDollars).toString()
+    }
+
+    private fun updateFieldsFromTipPercentage() {
+        var baseBill = 0
+        if (base_bill_input != null && !base_bill_input.text.isNullOrEmpty() && TextUtils.isDigitsOnly(base_bill_input.text)) {
+            baseBill = base_bill_input.text.toString().trim().toInt()
+        } else {
+            calculatedTotal.text = 0.00.toString()
+        }
+        val tipDollars : Double = baseBill * (tipPercentage / 100)
+        tipDollarsInput.text = tipDollars.toString()
+        calculatedTotal.text = (baseBill + tipDollars).toString()
+    }
+
+    private fun updateFieldsFromBaseBill() {
+        var baseBill = 0
+        if (base_bill_input != null  && !base_bill_input.text.isNullOrEmpty()  && TextUtils.isDigitsOnly(base_bill_input.text)) {
+            baseBill = base_bill_input.text.toString().trim().toInt()
+        } else {
+            tipDollarsInput.text = "0.00"
+            calculatedTotal.text = "0.00"
+        }
+        val tipDollars : Double = baseBill * (tipPercentage / 100)
+        tipDollarsInput.text = tipDollars.toString()
+        calculatedTotal.text = (baseBill + tipDollars).toString()
     }
 
     override fun onResume() {
