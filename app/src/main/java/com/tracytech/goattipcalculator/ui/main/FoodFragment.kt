@@ -10,7 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayout
 import com.tracytech.goattipcalculator.R
@@ -26,6 +25,9 @@ class FoodFragment : Fragment(), View.OnClickListener {
     private lateinit var calculatedTotal: TextView
     private lateinit var tipPercentageInput: TextView
     private lateinit var tipDollarsInput: TextView
+
+    private var tipPercentageUpdating = false
+    private var tipDollarsUpdating = false
 
     private var tipPercentage : Double = 0.00
 
@@ -63,24 +65,37 @@ class FoodFragment : Fragment(), View.OnClickListener {
         tipDollarsInput.text = "  "
 
         baseBillInput.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(entry: CharSequence, start: Int, count: Int, after: Int) {}
             override fun afterTextChanged(s: Editable) {
+                tipPercentageUpdating = true
+                tipDollarsUpdating = true
                 updateFieldsFromBaseBill()
             }
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
         })
 
         tipDollarsInput.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(entry: CharSequence, start: Int, count: Int, after: Int) {}
             override fun afterTextChanged(s: Editable) {
-//                updateFieldsFromTipDollars()  // TODO THIS IS BREAKING STUFF
+                if (tipDollarsUpdating) {
+                    tipDollarsUpdating = !tipDollarsUpdating
+                    return
+                }
+                tipDollarsUpdating = !tipDollarsUpdating
+                updateFieldsFromTipDollars()
             }
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
         })
 
         tipPercentageInput.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable) {
-                tipPercentage = if (s.toString().isEmpty()) 0.00 else  s.toString().toDouble()
+            override fun afterTextChanged(entry: Editable) {
+                if (tipPercentageUpdating) {
+                    tipPercentageUpdating = !tipPercentageUpdating
+                    tipPercentageUpdating = false
+                    return
+                }
+                tipPercentageUpdating = !tipPercentageUpdating
+                tipPercentage = if (entry.toString().isEmpty()) 0.00 else  entry.toString().toDouble()
                 updateFieldsFromTipPercentage()
             }
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
