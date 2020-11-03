@@ -1,6 +1,7 @@
 
 
 FEATURES TODO:
+- Reset all other fields when "Base Cost" is changed
 - Use "Money" Object in stead of double
 - make colors on swipe tab match the theme of that tab
 - custom button to change the tip dollar amount and % changes dynamically

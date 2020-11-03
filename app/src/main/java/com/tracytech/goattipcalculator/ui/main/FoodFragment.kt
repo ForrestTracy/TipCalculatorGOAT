@@ -26,14 +26,11 @@ class FoodFragment : Fragment(), View.OnClickListener {
     private lateinit var tipPercentageInput: TextView
     private lateinit var tipDollarsInput: TextView
 
-    private var tipPercentageUpdating = false
-    private var tipDollarsUpdating = false
-
     private var tipPercentage : Double = 0.00
+    private var tipDollars : Double = 0.00
 
     companion object {
-        @JvmStatic
-        fun newInstance() = FoodFragment()
+        @JvmStatic fun newInstance() = FoodFragment()
     }
 
 //    enum class QualityOfSvc(val value: String) {   POOR("poor"), FAIR("fair"), GOOD("good"), EXCELLENT("excellent") }
@@ -59,48 +56,12 @@ class FoodFragment : Fragment(), View.OnClickListener {
         calculatedTotal.text = getString(R.string.default_total_text)
         tipPercentageInput = view.findViewById(R.id.tip_input_percentage_field)
         tipPercentageInput.isFocusableInTouchMode = true
-        tipPercentageInput.text = "  "
+        tipPercentageInput.text = "0.00"
         tipDollarsInput = view.findViewById(R.id.tip_input_dollars_field)
         tipDollarsInput.isFocusableInTouchMode = true
-        tipDollarsInput.text = "  "
+        tipDollarsInput.text = "0.00"
 
-        baseBillInput.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(entry: CharSequence, start: Int, count: Int, after: Int) {}
-            override fun afterTextChanged(s: Editable) {
-                tipPercentageUpdating = true
-                tipDollarsUpdating = true
-                updateFieldsFromBaseBill()
-            }
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
-        })
-
-        tipDollarsInput.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(entry: CharSequence, start: Int, count: Int, after: Int) {}
-            override fun afterTextChanged(s: Editable) {
-                if (tipDollarsUpdating) {
-                    tipDollarsUpdating = !tipDollarsUpdating
-                    return
-                }
-                tipDollarsUpdating = !tipDollarsUpdating
-                updateFieldsFromTipDollars()
-            }
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
-        })
-
-        tipPercentageInput.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(entry: Editable) {
-                if (tipPercentageUpdating) {
-                    tipPercentageUpdating = !tipPercentageUpdating
-                    tipPercentageUpdating = false
-                    return
-                }
-                tipPercentageUpdating = !tipPercentageUpdating
-                tipPercentage = if (entry.toString().isEmpty()) 0.00 else  entry.toString().toDouble()
-                updateFieldsFromTipPercentage()
-            }
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
-        })
+        setupListeners()
 
         return view
     }
@@ -149,7 +110,6 @@ class FoodFragment : Fragment(), View.OnClickListener {
         return baseBill + tipDollars
     }
 
-    // THIS IS BREAKING STUFF
     private fun updateFieldsFromTipDollars() {
         var baseBill = 0
         if (base_bill_input != null && !base_bill_input.text.isNullOrEmpty() && TextUtils.isDigitsOnly(base_bill_input.text)) {
@@ -157,7 +117,6 @@ class FoodFragment : Fragment(), View.OnClickListener {
         } else {
             calculatedTotal.text = 0.00.toString()
         }
-        val tipDollars : Double = tipDollarsInput.text.toString().trim().toDouble()
         tipPercentageInput.text = (tipDollars % baseBill).toString()
         calculatedTotal.text = (baseBill + tipDollars).toString()
     }
@@ -175,9 +134,9 @@ class FoodFragment : Fragment(), View.OnClickListener {
     }
 
     private fun updateFieldsFromBaseBill() {
-        var baseBill = 0
+        var baseBill = 0.00
         if (base_bill_input != null  && !base_bill_input.text.isNullOrEmpty()  && TextUtils.isDigitsOnly(base_bill_input.text)) {
-            baseBill = base_bill_input.text.toString().trim().toInt()
+            baseBill = base_bill_input?.text?.toString()?.trim()?.toDouble() ?: 0.00
         } else {
             tipDollarsInput.text = "0.00"
             calculatedTotal.text = "0.00"
@@ -185,6 +144,37 @@ class FoodFragment : Fragment(), View.OnClickListener {
         val tipDollars : Double = baseBill * (tipPercentage / 100)
         tipDollarsInput.text = tipDollars.toString()
         calculatedTotal.text = (baseBill + tipDollars).toString()
+    }
+
+    private fun setupListeners() {
+
+        baseBillInput.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(entry: CharSequence, start: Int, count: Int, after: Int) { }
+            override fun afterTextChanged(entry: Editable) { updateFieldsFromBaseBill() }
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+        })
+
+        tipDollarsInput.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(entry: CharSequence, start: Int, count: Int, after: Int) { }
+            override fun afterTextChanged(entry: Editable) {
+                if (tipDollarsInput.hasFocus()) {
+                    tipDollars = if (entry.toString().isNotEmpty()) entry.toString().trim().toDouble() else 0.00
+                    updateFieldsFromTipDollars()
+                }
+            }
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+        })
+
+        tipPercentageInput.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(entry: CharSequence, start: Int, count: Int, after: Int) {}
+            override fun afterTextChanged(entry: Editable) {
+                if (tipPercentageInput.hasFocus()) {
+                    tipPercentage = if (entry.toString().isNotEmpty()) entry.toString().trim().toDouble() else 0.00
+                    updateFieldsFromTipPercentage()
+                }
+            }
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+        })
     }
 
     override fun onResume() {
