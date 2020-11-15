@@ -8,5 +8,6 @@
     <string name="total_title">total</string>
     <string name="tip_title">tip</string>
     <string name="default_total_text">$ _ . _ _</string>
+    <string name="initial_zero">0.00</string>
 
 </resources>

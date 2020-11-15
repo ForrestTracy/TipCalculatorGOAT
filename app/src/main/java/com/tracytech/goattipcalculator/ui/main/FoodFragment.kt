@@ -3,7 +3,6 @@ package com.tracytech.goattipcalculator.ui.main
 import android.app.Activity
 import android.os.Bundle
 import android.text.Editable
-import android.text.TextUtils
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
@@ -26,12 +25,11 @@ class FoodFragment : Fragment(), View.OnClickListener {
     private lateinit var tipPercentageInput: TextView
     private lateinit var tipDollarsInput: TextView
 
+    private var baseBill : Double = 0.00
     private var tipPercentage : Double = 0.00
     private var tipDollars : Double = 0.00
 
-    companion object {
-        @JvmStatic fun newInstance() = FoodFragment()
-    }
+    companion object { @JvmStatic fun newInstance() = FoodFragment() }
 
 //    enum class QualityOfSvc(val value: String) {   POOR("poor"), FAIR("fair"), GOOD("good"), EXCELLENT("excellent") }
 //    enum class QualityOfSvc { POOR, FAIR, GOOD, EXCELLENT, CUSTOM }
@@ -50,19 +48,8 @@ class FoodFragment : Fragment(), View.OnClickListener {
     ): View? {
         val view: View = inflater.inflate(R.layout.fragment_food, container, false)
         setUpButtons(view)
-
-        baseBillInput = view.findViewById(R.id.base_bill_input)
-        calculatedTotal = view.findViewById(R.id.calculated_total_value)
-        calculatedTotal.text = getString(R.string.default_total_text)
-        tipPercentageInput = view.findViewById(R.id.tip_input_percentage_field)
-        tipPercentageInput.isFocusableInTouchMode = true
-        tipPercentageInput.text = "0.00"
-        tipDollarsInput = view.findViewById(R.id.tip_input_dollars_field)
-        tipDollarsInput.isFocusableInTouchMode = true
-        tipDollarsInput.text = "0.00"
-
+        setupInputs(view)
         setupListeners()
-
         return view
     }
 
@@ -80,6 +67,21 @@ class FoodFragment : Fragment(), View.OnClickListener {
         customBtn.setOnClickListener(this)
     }
 
+    private fun setupInputs(view: View) {
+        baseBillInput = view.findViewById(R.id.base_bill_input)
+
+        calculatedTotal = view.findViewById(R.id.calculated_total_value)
+        calculatedTotal.text = getString(R.string.default_total_text)
+
+        tipPercentageInput = view.findViewById(R.id.tip_input_percentage_field)
+        tipPercentageInput.isFocusableInTouchMode = true
+        tipPercentageInput.text = getString(R.string.initial_zero)
+
+        tipDollarsInput = view.findViewById(R.id.tip_input_dollars_field)
+        tipDollarsInput.isFocusableInTouchMode = true
+        tipDollarsInput.text = getString(R.string.initial_zero)
+    }
+
     override fun onClick(view: View?) {
         tipPercentage = when (view) {
             superb_button -> 25.00
@@ -89,68 +91,57 @@ class FoodFragment : Fragment(), View.OnClickListener {
             custom_button -> 0.00
             else -> 15.00
         }
-        total = updateFields()
+        recalculateTipFields()
         tipPercentageInput.text = tipPercentage.toString()
-        if (view == custom_button) {
-            tipPercentageInput.text = ""
-            tipPercentageInput.requestFocus()
-        }
-        calculatedTotal.text = "$ $total"
+        if (view == custom_button) tipPercentageInput.requestFocus()
+        calculatedTotal.text = "$${formatDecimals(baseBill + tipDollars)}"
     }
 
-    private fun updateFields(): Double {
-        val baseBill: Int
-        if (base_bill_input != null && !base_bill_input.text.isNullOrEmpty() && TextUtils.isDigitsOnly(base_bill_input.text)) {
-                baseBill = base_bill_input.text.toString().trim().toInt()
-        } else {
-            return 0.00
+    private fun recalculateTipFields() {
+        if (baseBill < 0.01) {
+            tipDollars = 0.00
+            return
         }
-        val tipDollars : Double = baseBill * (tipPercentage / 100)
-        tipDollarsInput.text = tipDollars.toString()
-        return baseBill + tipDollars
+        tipDollars = formatDecimals(baseBill * (tipPercentage / 100)).toDouble()
+        tipDollarsInput.text = formatDecimals(tipDollars)
     }
 
-    private fun updateFieldsFromTipDollars() {
-        var baseBill = 0
-        if (base_bill_input != null && !base_bill_input.text.isNullOrEmpty() && TextUtils.isDigitsOnly(base_bill_input.text)) {
-            baseBill = base_bill_input.text.toString().trim().toInt()
-        } else {
+    private fun updateFieldsFromTipDollarsChange() {
+        if (baseBill < 0.01) {
             calculatedTotal.text = 0.00.toString()
         }
-        tipPercentageInput.text = (tipDollars % baseBill).toString()
-        calculatedTotal.text = (baseBill + tipDollars).toString()
+        tipPercentage = ((tipDollars / baseBill) * 100)
+        tipPercentageInput.text = formatDecimals(tipPercentage)
+        calculatedTotal.text = "$${formatDecimals(baseBill + tipDollars)}"
     }
 
-    private fun updateFieldsFromTipPercentage() {
-        var baseBill = 0
-        if (base_bill_input != null && !base_bill_input.text.isNullOrEmpty() && TextUtils.isDigitsOnly(base_bill_input.text)) {
-            baseBill = base_bill_input.text.toString().trim().toInt()
-        } else {
+    private fun updateFieldsFromTipPercentageChange() {
+        if (baseBill < 0.01) {
             calculatedTotal.text = 0.00.toString()
         }
-        val tipDollars : Double = baseBill * (tipPercentage / 100)
-        tipDollarsInput.text = tipDollars.toString()
-        calculatedTotal.text = (baseBill + tipDollars).toString()
+        tipDollars = formatDecimals(baseBill * (tipPercentage / 100)).toDouble()
+        tipDollarsInput.text = formatDecimals(tipDollars)
+        calculatedTotal.text = "$${formatDecimals(baseBill + tipDollars)}"
     }
 
-    private fun updateFieldsFromBaseBill() {
-        var baseBill = 0.00
-        if (base_bill_input != null  && !base_bill_input.text.isNullOrEmpty()  && TextUtils.isDigitsOnly(base_bill_input.text)) {
-            baseBill = base_bill_input?.text?.toString()?.trim()?.toDouble() ?: 0.00
-        } else {
+    private fun updateFieldsFromBaseBillChange() {
+        if (baseBill < 0.01) {
             tipDollarsInput.text = "0.00"
             calculatedTotal.text = "0.00"
         }
-        val tipDollars : Double = baseBill * (tipPercentage / 100)
-        tipDollarsInput.text = tipDollars.toString()
-        calculatedTotal.text = (baseBill + tipDollars).toString()
+        tipDollars = formatDecimals(baseBill * (tipPercentage / 100)).toDouble()
+        tipDollarsInput.text = formatDecimals(tipDollars)
+        calculatedTotal.text = "$${formatDecimals(baseBill + tipDollars)}"
     }
 
     private fun setupListeners() {
 
         baseBillInput.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(entry: CharSequence, start: Int, count: Int, after: Int) { }
-            override fun afterTextChanged(entry: Editable) { updateFieldsFromBaseBill() }
+            override fun afterTextChanged(entry: Editable) {
+                baseBill = entry.trim().toString().toDoubleOrNull() ?: 0.00
+                updateFieldsFromBaseBillChange()
+            }
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
         })
 
@@ -158,8 +149,8 @@ class FoodFragment : Fragment(), View.OnClickListener {
             override fun beforeTextChanged(entry: CharSequence, start: Int, count: Int, after: Int) { }
             override fun afterTextChanged(entry: Editable) {
                 if (tipDollarsInput.hasFocus()) {
-                    tipDollars = if (entry.toString().isNotEmpty()) entry.toString().trim().toDouble() else 0.00
-                    updateFieldsFromTipDollars()
+                    tipDollars = entry.trim().toString().toDoubleOrNull() ?: 0.00
+                    updateFieldsFromTipDollarsChange()
                 }
             }
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
@@ -169,12 +160,16 @@ class FoodFragment : Fragment(), View.OnClickListener {
             override fun beforeTextChanged(entry: CharSequence, start: Int, count: Int, after: Int) {}
             override fun afterTextChanged(entry: Editable) {
                 if (tipPercentageInput.hasFocus()) {
-                    tipPercentage = if (entry.toString().isNotEmpty()) entry.toString().trim().toDouble() else 0.00
-                    updateFieldsFromTipPercentage()
+                    tipPercentage = entry.trim().toString().toDoubleOrNull() ?: 0.00
+                    updateFieldsFromTipPercentageChange()
                 }
             }
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
         })
+    }
+
+    fun formatDecimals(unformattedNumber: Double) : String {
+        return String.format("%.2f", unformattedNumber)
     }
 
     override fun onResume() {

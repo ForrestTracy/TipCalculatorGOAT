@@ -1,10 +1,12 @@
 
 
 FEATURES TODO:
+- Make vertical only
+- Allow input with decimal places
 - Reset all other fields when "Base Cost" is changed
-- Use "Money" Object in stead of double
+- ??  MAYBE - Use "Money" Object in stead of double
 - make colors on swipe tab match the theme of that tab
-- custom button to change the tip dollar amount and % changes dynamically
+- DONE - custom button to change the tip dollar amount and % changes dynamically
 - save app prev states to look through old bills
 - split RIDE/FOOD between a number of people
 - pop up info button to show how/why % for different service quality are decided
