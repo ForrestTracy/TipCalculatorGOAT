@@ -121,10 +121,10 @@
         android:id="@+id/calculated_values_wrapper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:useDefaultMargins="true"
+        android:useDefaultMargins="false"
         android:alignmentMode="alignBounds"
         android:columnOrderPreserved="false"
-        android:columnCount="5"
+        android:columnCount="3"
         android:rowCount="5"
         app:layout_constraintTop_toBottomOf="@+id/tip_button_wrapper">
 
@@ -142,7 +142,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             tools:layout_marginRight="15dp"
-            android:layout_marginStart="10dp"/>
+            android:layout_marginStart="5dp"/>
         <LinearLayout
             android:id="@+id/tip_percent_wrapper"
             android:layout_row="0"
@@ -174,9 +174,7 @@
                 android:shadowRadius="2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="15.0dip"
-                tools:layout_marginRight="15dp"
-                android:layout_marginStart="10dp"/>
+                android:paddingTop="15.0dip"/>
         </LinearLayout>
         <LinearLayout
             android:id="@+id/tip_dollars_wrapper"
@@ -243,6 +241,39 @@
             app:layout_constraintRight_toRightOf="parent"
             tools:layout_marginLeft="25dp"
             tools:layout_marginRight="15dp" />
+        <TextView
+            android:layout_row="2"
+            android:layout_column="0"
+            android:id="@+id/split_title"
+            android:text="@string/split_title"
+            android:textColor="@android:color/black"
+            android:textSize="30sp"
+            android:fontFamily="sans-serif-light"
+            android:shadowRadius="2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="15.0dip"
+            tools:layout_marginRight="15dp"
+            android:layout_marginStart="10dp"/>
+        <Button
+            android:layout_row="2"
+            android:layout_column="1"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/no_split_button"
+            android:text=""
+            android:background="@drawable/no_focused"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_height="70dp"
+            android:layout_width="70dp" />
+        <Button
+            android:layout_row="2"
+            android:layout_column="2"
+            android:id="@+id/yes_split_button"
+            android:text=""
+            android:background="@drawable/yes_unfocused"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_height="70dp"
+            android:layout_width="70dp" />
     </GridLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

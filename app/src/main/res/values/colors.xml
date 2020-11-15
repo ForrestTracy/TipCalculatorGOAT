@@ -9,3 +9,17 @@
     <color name="blue1">#99c9ea</color>
 
 </resources>
+
+<!--
+LIGHT GREY BACKGROUND
+#efedf5
+
+FOOD COLORS
+- buttons
+superb = #007acc
+good   = #3294d6
+fair   = #7fbce5
+poor   = #99c9ea
+- tab underline & yes/no button circle
+blue4 / #007acc
+-->

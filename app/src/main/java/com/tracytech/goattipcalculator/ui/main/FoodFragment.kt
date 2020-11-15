@@ -25,6 +25,8 @@ class FoodFragment : Fragment(), View.OnClickListener {
     private lateinit var tipPercentageInput: TextView
     private lateinit var tipDollarsInput: TextView
 
+    private var splittingBill = false
+
     private var baseBill : Double = 0.00
     private var tipPercentage : Double = 0.00
     private var tipDollars : Double = 0.00
@@ -59,12 +61,16 @@ class FoodFragment : Fragment(), View.OnClickListener {
         val fairBtn: Button = view.findViewById(R.id.fair_button)
         val poorBtn: Button = view.findViewById(R.id.poor_button)
         val customBtn: Button = view.findViewById(R.id.custom_button)
+        val noSplitBtn: Button = view.findViewById(R.id.no_split_button)
+        val yesSplitBtn: Button = view.findViewById(R.id.yes_split_button)
 
         superbBtn.setOnClickListener(this)
         goodBtn.setOnClickListener(this)
         fairBtn.setOnClickListener(this)
         poorBtn.setOnClickListener(this)
         customBtn.setOnClickListener(this)
+        noSplitBtn.setOnClickListener(this)
+        yesSplitBtn.setOnClickListener(this)
     }
 
     private fun setupInputs(view: View) {
@@ -83,6 +89,10 @@ class FoodFragment : Fragment(), View.OnClickListener {
     }
 
     override fun onClick(view: View?) {
+        if (view == no_split_button || view == yes_split_button) {
+            respondToSplit(view)
+            return
+        }
         tipPercentage = when (view) {
             superb_button -> 25.00
             good_button   -> 20.00
@@ -170,6 +180,22 @@ class FoodFragment : Fragment(), View.OnClickListener {
 
     fun formatDecimals(unformattedNumber: Double) : String {
         return String.format("%.2f", unformattedNumber)
+    }
+    private fun respondToSplit(view: View?) {
+        if (view == no_split_button) {
+            if (!splittingBill) return
+            splittingBill = false
+            no_split_button.setBackgroundResource(R.drawable.no_focused)
+            yes_split_button.setBackgroundResource(R.drawable.yes_unfocused)
+            // hide slitting details
+        }
+        if (view == yes_split_button) {
+            if (splittingBill) return
+            splittingBill = true
+            no_split_button.setBackgroundResource(R.drawable.no_unfocused)
+            yes_split_button.setBackgroundResource(R.drawable.yes_focused)
+            // show splitting details
+        }
     }
 
     override fun onResume() {
