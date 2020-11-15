@@ -34,21 +34,11 @@
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginStart="10dp" />
 
-<!--        <com.google.android.material.textfield.TextInputLayout-->
-<!--            android:id="@+id/base_bill_field"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="parent"-->
-<!--            app:boxBackgroundMode="none"-->
-<!--            android:layout_marginStart="8dp"-->
-<!--            android:layout_marginEnd="8dp">-->
-
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/base_bill_input"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="numberSigned"
+            android:inputType="numberDecimal"
             android:textSize="30sp"
             android:textStyle="bold"
             app:layout_constraintTop_toBottomOf="@+id/total_bill_amount_label"
@@ -56,7 +46,6 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent" />
-<!--        </com.google.android.material.textfield.TextInputLayout>-->
     </LinearLayout>
 
     <TextView

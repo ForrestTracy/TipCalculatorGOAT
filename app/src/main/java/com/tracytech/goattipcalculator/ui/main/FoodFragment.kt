@@ -15,7 +15,7 @@ import com.tracytech.goattipcalculator.R
 import kotlinx.android.synthetic.main.fragment_food.*
 
 
-private var total : Double = 0.00;
+//private var total : Double = 0.00;
 
 class FoodFragment : Fragment(), View.OnClickListener {
 
