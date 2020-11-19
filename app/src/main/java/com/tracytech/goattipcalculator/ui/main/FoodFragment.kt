@@ -1,13 +1,11 @@
 package com.tracytech.goattipcalculator.ui.main
 
 import android.app.Activity
-import android.opengl.Visibility
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.GONE
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
@@ -25,7 +23,8 @@ class FoodFragment : Fragment(), View.OnClickListener {
     private lateinit var baseBillInput: TextView
     private lateinit var calculatedTotal: TextView
     private lateinit var eachPersonPaysCalculated: TextView
-    private lateinit var eachPersonPaysBreakdown: TextView
+    private lateinit var eachPersonTotalBreakdown: TextView
+    private lateinit var eachPersonTipBreakdown: TextView
     private lateinit var splitBetweenInput: TextView
     private lateinit var tipPercentageInput: TextView
     private lateinit var tipDollarsInput: TextView
@@ -86,7 +85,8 @@ class FoodFragment : Fragment(), View.OnClickListener {
         calculatedTotal.text = getString(R.string.default_total_text)
 
         eachPersonPaysCalculated = view.findViewById(R.id.each_person_pays_calculated)
-        eachPersonPaysBreakdown = view.findViewById(R.id.each_person_pays_breakdown)
+        eachPersonTotalBreakdown = view.findViewById(R.id.each_person_total_breakdown)
+        eachPersonTipBreakdown = view.findViewById(R.id.each_person_tip_breakdown)
 
         splitBetweenInput = view.findViewById(R.id.split_input_field)
         splitBetweenInput.text = ""
@@ -119,6 +119,7 @@ class FoodFragment : Fragment(), View.OnClickListener {
         tipPercentageInput.text = tipPercentage.toString()
         if (view == custom_button) tipPercentageInput.requestFocus()
         calculatedTotal.text = "$${formatDecimals(baseBill + tipDollars)}"
+        populateEachPersonTotals()
     }
 
     private fun recalculateTipFields() {
@@ -137,6 +138,7 @@ class FoodFragment : Fragment(), View.OnClickListener {
         tipPercentage = ((tipDollars / baseBill) * 100)
         tipPercentageInput.text = formatDecimals(tipPercentage)
         calculatedTotal.text = "$${formatDecimals(baseBill + tipDollars)}"
+        populateEachPersonTotals()
     }
 
     private fun updateFieldsFromTipPercentageChange() {
@@ -146,6 +148,7 @@ class FoodFragment : Fragment(), View.OnClickListener {
         tipDollars = formatDecimals(baseBill * (tipPercentage / 100)).toDouble()
         tipDollarsInput.text = formatDecimals(tipDollars)
         calculatedTotal.text = "$${formatDecimals(baseBill + tipDollars)}"
+        populateEachPersonTotals()
     }
 
     private fun updateFieldsFromBaseBillChange() {
@@ -156,6 +159,7 @@ class FoodFragment : Fragment(), View.OnClickListener {
         tipDollars = formatDecimals(baseBill * (tipPercentage / 100)).toDouble()
         tipDollarsInput.text = formatDecimals(tipDollars)
         calculatedTotal.text = "$${formatDecimals(baseBill + tipDollars)}"
+        populateEachPersonTotals()
     }
 
     private fun setupListeners() {
@@ -165,6 +169,14 @@ class FoodFragment : Fragment(), View.OnClickListener {
             override fun afterTextChanged(entry: Editable) {
                 baseBill = entry.trim().toString().toDoubleOrNull() ?: 0.00
                 updateFieldsFromBaseBillChange()
+            }
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+        })
+
+        splitBetweenInput.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(entry: CharSequence, start: Int, count: Int, after: Int) { }
+            override fun afterTextChanged(entry: Editable) {
+                populateEachPersonTotals()
             }
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
         })
@@ -216,16 +228,22 @@ class FoodFragment : Fragment(), View.OnClickListener {
     }
 
     private fun populateEachPersonTotals() {
-        if (calculatedTotal.text.toString().isEmpty()) return
-        if (split_input_field.toString().isEmpty()) {
+        val total = baseBill + tipDollars
+        if (total < 0.01) {
+            eachPersonPaysCalculated.text = "$0.00"
+            eachPersonTotalBreakdown.text = "$0.00"
+            eachPersonTipBreakdown.text = "$0.00"
+        }
+        val splitBetween = split_input_field.text?.toString()?.toDoubleOrNull()
+        if (splitBetween == null) {
             eachPersonPaysCalculated.text = calculatedTotal.text
+            return
         }
-        val total = calculatedTotal.text.toString().toDoubleOrNull()
-        val splitBetween = split_input_field.text.toString().toDoubleOrNull()
-        if (total != null && splitBetween != null) {
-            eachPersonPaysCalculated.text = formatDecimals(total / splitBetween)
-        }
-//        eachPersonPaysBreakdown.text =
+        eachPersonPaysCalculated.text = "$" + formatDecimals(total / splitBetween)
+        val totalSplit = formatDecimals(baseBill / splitBetween)
+        val tipSplit = formatDecimals(tipDollars / splitBetween)
+        eachPersonTotalBreakdown.text = "$$totalSplit bill"
+        eachPersonTipBreakdown.text = "$$tipSplit tip"
     }
 
     override fun onResume() {
