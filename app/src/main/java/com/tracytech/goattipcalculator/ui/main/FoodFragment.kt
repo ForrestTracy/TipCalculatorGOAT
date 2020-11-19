@@ -1,11 +1,13 @@
 package com.tracytech.goattipcalculator.ui.main
 
 import android.app.Activity
+import android.opengl.Visibility
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
@@ -22,6 +24,9 @@ class FoodFragment : Fragment(), View.OnClickListener {
     // TODO should these fields move above class declaration?
     private lateinit var baseBillInput: TextView
     private lateinit var calculatedTotal: TextView
+    private lateinit var eachPersonPaysCalculated: TextView
+    private lateinit var eachPersonPaysBreakdown: TextView
+    private lateinit var splitBetweenInput: TextView
     private lateinit var tipPercentageInput: TextView
     private lateinit var tipDollarsInput: TextView
 
@@ -75,9 +80,16 @@ class FoodFragment : Fragment(), View.OnClickListener {
 
     private fun setupInputs(view: View) {
         baseBillInput = view.findViewById(R.id.base_bill_input)
+        baseBillInput.requestFocus()
 
         calculatedTotal = view.findViewById(R.id.calculated_total_value)
         calculatedTotal.text = getString(R.string.default_total_text)
+
+        eachPersonPaysCalculated = view.findViewById(R.id.each_person_pays_calculated)
+        eachPersonPaysBreakdown = view.findViewById(R.id.each_person_pays_breakdown)
+
+        splitBetweenInput = view.findViewById(R.id.split_input_field)
+        splitBetweenInput.text = ""
 
         tipPercentageInput = view.findViewById(R.id.tip_input_percentage_field)
         tipPercentageInput.isFocusableInTouchMode = true
@@ -86,6 +98,8 @@ class FoodFragment : Fragment(), View.OnClickListener {
         tipDollarsInput = view.findViewById(R.id.tip_input_dollars_field)
         tipDollarsInput.isFocusableInTouchMode = true
         tipDollarsInput.text = getString(R.string.initial_zero)
+
+
     }
 
     override fun onClick(view: View?) {
@@ -181,21 +195,37 @@ class FoodFragment : Fragment(), View.OnClickListener {
     fun formatDecimals(unformattedNumber: Double) : String {
         return String.format("%.2f", unformattedNumber)
     }
+
     private fun respondToSplit(view: View?) {
         if (view == no_split_button) {
             if (!splittingBill) return
             splittingBill = false
             no_split_button.setBackgroundResource(R.drawable.no_focused)
             yes_split_button.setBackgroundResource(R.drawable.yes_unfocused)
-            // hide slitting details
+            split_bill_wrapper.visibility = View.INVISIBLE // still takes up layout space vs GONE
         }
         if (view == yes_split_button) {
             if (splittingBill) return
+            populateEachPersonTotals()
             splittingBill = true
             no_split_button.setBackgroundResource(R.drawable.no_unfocused)
             yes_split_button.setBackgroundResource(R.drawable.yes_focused)
-            // show splitting details
+            splitBetweenInput.requestFocus()
+            split_bill_wrapper.visibility = View.VISIBLE
         }
+    }
+
+    private fun populateEachPersonTotals() {
+        if (calculatedTotal.text.toString().isEmpty()) return
+        if (split_input_field.toString().isEmpty()) {
+            eachPersonPaysCalculated.text = calculatedTotal.text
+        }
+        val total = calculatedTotal.text.toString().toDoubleOrNull()
+        val splitBetween = split_input_field.text.toString().toDoubleOrNull()
+        if (total != null && splitBetween != null) {
+            eachPersonPaysCalculated.text = formatDecimals(total / splitBetween)
+        }
+//        eachPersonPaysBreakdown.text =
     }
 
     override fun onResume() {
