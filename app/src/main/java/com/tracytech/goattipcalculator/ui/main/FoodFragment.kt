@@ -59,6 +59,12 @@ class FoodFragment : Fragment(), View.OnClickListener {
         return view
     }
 
+    override fun onResume() {
+        super.onResume()
+        val tabs: TabLayout? = (context as Activity).findViewById(R.id.tabs)
+        tabs?.setSelectedTabIndicatorColor(resources.getColor(R.color.blue4))
+    }
+
     private fun setUpButtons(view: View) {
         val superbBtn: Button = view.findViewById(R.id.superb_button)
         val goodBtn: Button = view.findViewById(R.id.good_button)
@@ -236,7 +242,10 @@ class FoodFragment : Fragment(), View.OnClickListener {
         }
         val splitBetween = split_input_field.text?.toString()?.toDoubleOrNull()
         if (splitBetween == null) {
+//            eachPersonPaysCalculated.text = formatDecimals(calculatedTotal.text.toString().toDoubleOrNull() ?: 0.0)
             eachPersonPaysCalculated.text = calculatedTotal.text
+            eachPersonTotalBreakdown.text = if (base_bill_input.text.isNullOrBlank()) "$0.00 bill" else "$" + formatDecimals(base_bill_input.text.toString().toDouble()) + " bill"
+            eachPersonTipBreakdown.text = if (tipDollars < 0.01) "$0.00 tip" else "$ ${formatDecimals(tipDollars)} tip"
             return
         }
         eachPersonPaysCalculated.text = "$" + formatDecimals(total / splitBetween)
@@ -244,12 +253,6 @@ class FoodFragment : Fragment(), View.OnClickListener {
         val tipSplit = formatDecimals(tipDollars / splitBetween)
         eachPersonTotalBreakdown.text = "$$totalSplit bill"
         eachPersonTipBreakdown.text = "$$tipSplit tip"
-    }
-
-    override fun onResume() {
-        super.onResume()
-        val tabs: TabLayout? = (context as Activity).findViewById(R.id.tabs)
-        tabs?.setSelectedTabIndicatorColor(resources.getColor(R.color.blue4))
     }
 
 }
