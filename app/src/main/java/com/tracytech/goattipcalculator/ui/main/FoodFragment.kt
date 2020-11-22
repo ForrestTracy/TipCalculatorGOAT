@@ -10,9 +10,12 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import java.lang.Math
 import com.google.android.material.tabs.TabLayout
 import com.tracytech.goattipcalculator.R
 import kotlinx.android.synthetic.main.fragment_food.*
+import kotlin.math.absoluteValue
+import kotlin.math.round
 
 
 //private var total : Double = 0.00;
@@ -240,19 +243,39 @@ class FoodFragment : Fragment(), View.OnClickListener {
             eachPersonTotalBreakdown.text = "$0.00"
             eachPersonTipBreakdown.text = "$0.00"
         }
-        val splitBetween = split_input_field.text?.toString()?.toDoubleOrNull()
-        if (splitBetween == null) {
-//            eachPersonPaysCalculated.text = formatDecimals(calculatedTotal.text.toString().toDoubleOrNull() ?: 0.0)
-            eachPersonPaysCalculated.text = calculatedTotal.text
-            eachPersonTotalBreakdown.text = if (base_bill_input.text.isNullOrBlank()) "$0.00 bill" else "$" + formatDecimals(base_bill_input.text.toString().toDouble()) + " bill"
-            eachPersonTipBreakdown.text = if (tipDollars < 0.01) "$0.00 tip" else "$ ${formatDecimals(tipDollars)} tip"
+        val splitBetweenCount = split_input_field.text?.toString()?.toDoubleOrNull()
+        if (splitBetweenCount == null) {
+//            eachPersonPaysCalculated.text = calculatedTotal.text
+//            eachPersonTotalBreakdown.text = if (base_bill_input.text.isNullOrBlank()) "$0.00 bill" else "$" + formatDecimals(base_bill_input.text.toString().toDouble()) + " bill"
+//            eachPersonTipBreakdown.text = if (tipDollars < 0.01) "$0.00 tip" else "$ ${formatDecimals(tipDollars)} tip"
+            eachPersonPaysCalculated.text = "\$_.__"
+            eachPersonTotalBreakdown.text = "\$_.__"
+            eachPersonTipBreakdown.text = "\$_.__"
             return
         }
-        eachPersonPaysCalculated.text = "$" + formatDecimals(total / splitBetween)
-        val totalSplit = formatDecimals(baseBill / splitBetween)
-        val tipSplit = formatDecimals(tipDollars / splitBetween)
+        val eachPersonPays = formatDecimals(total / splitBetweenCount)
+        eachPersonPaysCalculated.text = "$ $eachPersonPays"
+        val totalSplit = formatDecimals(baseBill / splitBetweenCount)
+        val tipSplit = formatDecimals(tipDollars / splitBetweenCount)
         eachPersonTotalBreakdown.text = "$$totalSplit bill"
         eachPersonTipBreakdown.text = "$$tipSplit tip"
+
+        var leftover = checkLeftover(total, eachPersonPays.toDouble(), splitBetweenCount.toInt())
+        if (leftover > 0) {
+            leftover_alert_field.visibility = View.VISIBLE
+            leftover_alert_field.text = "Uneven split. There is an overpayment of ¢$leftover cents"
+        } else if (leftover < 0) {
+            leftover_alert_field.visibility = View.VISIBLE
+            leftover = leftover.absoluteValue
+            leftover_alert_field.text = "Uneven split. Someone has to pay ¢$leftover extra"
+        }
+
+    }
+
+    fun checkLeftover(total: Double, eachPersonPays: Double, splitBetweenCount: Int): Int {
+        val roughTotal = eachPersonPays.times(splitBetweenCount)
+        if (roughTotal.equals(total)) return 0
+        return (round((roughTotal.minus(total)) * 100)).toInt()
     }
 
 }

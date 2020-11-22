@@ -290,7 +290,7 @@
                 android:alignmentMode="alignBounds"
                 android:columnOrderPreserved="false"
                 android:columnCount="2"
-                android:rowCount="4"
+                android:rowCount="5"
                 app:layout_constraintTop_toBottomOf="@+id/calculated_values_wrapper">
 
                 <TextView
@@ -394,6 +394,23 @@
                     android:id="@+id/each_person_tip_breakdown"
                     android:layout_row="3"
                     android:layout_column="1"
+                    android:text=""
+                    android:textColor="@android:color/black"
+                    android:textSize="23sp"
+                    android:fontFamily="sans-serif-light"
+                    android:shadowRadius="2"
+                    android:layout_gravity="left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="5.0dip"
+                    tools:layout_marginRight="15dp"
+                    android:layout_marginStart="10dp"/>
+                <TextView
+                    android:visibility="invisible"
+                    android:id="@+id/leftover_alert_field"
+                    android:layout_row="4"
+                    android:layout_column="0"
+                    android:layout_columnSpan="2"
                     android:text=""
                     android:textColor="@android:color/black"
                     android:textSize="23sp"
