@@ -10,19 +10,14 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import java.lang.Math
 import com.google.android.material.tabs.TabLayout
 import com.tracytech.goattipcalculator.R
 import kotlinx.android.synthetic.main.fragment_food.*
 import kotlin.math.absoluteValue
 import kotlin.math.round
 
-
-//private var total : Double = 0.00;
-
 class FoodFragment : Fragment(), View.OnClickListener {
 
-    // TODO should these fields move above class declaration?
     private lateinit var baseBillInput: TextView
     private lateinit var calculatedTotal: TextView
     private lateinit var eachPersonPaysCalculated: TextView
@@ -39,13 +34,6 @@ class FoodFragment : Fragment(), View.OnClickListener {
     private var tipDollars : Double = 0.00
 
     companion object { @JvmStatic fun newInstance() = FoodFragment() }
-
-//    enum class QualityOfSvc(val value: String) {   POOR("poor"), FAIR("fair"), GOOD("good"), EXCELLENT("excellent") }
-//    enum class QualityOfSvc { POOR, FAIR, GOOD, EXCELLENT, CUSTOM }
-//    val qualityToPercentage = mapOf(QualityOfSvc.POOR to 10, QualityOfSvc.FAIR to 15, QualityOfSvc.GOOD to 20, QualityOfSvc.EXCELLENT to 25)
-//    val qualityToPercentage = arrayOf(25.00, 20.00, 15.00, 10.00)
-//    private val qualityToName = mapOf(QualityOfSvc.POOR to "poor", QualityOfSvc.FAIR to "fair", QualityOfSvc.GOOD to "good", QualityOfSvc.EXCELLENT to "excellent")
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -245,9 +233,6 @@ class FoodFragment : Fragment(), View.OnClickListener {
         }
         val splitBetweenCount = split_input_field.text?.toString()?.toDoubleOrNull()
         if (splitBetweenCount == null) {
-//            eachPersonPaysCalculated.text = calculatedTotal.text
-//            eachPersonTotalBreakdown.text = if (base_bill_input.text.isNullOrBlank()) "$0.00 bill" else "$" + formatDecimals(base_bill_input.text.toString().toDouble()) + " bill"
-//            eachPersonTipBreakdown.text = if (tipDollars < 0.01) "$0.00 tip" else "$ ${formatDecimals(tipDollars)} tip"
             eachPersonPaysCalculated.text = "\$_.__"
             eachPersonTotalBreakdown.text = "\$_.__"
             eachPersonTipBreakdown.text = "\$_.__"
@@ -263,13 +248,12 @@ class FoodFragment : Fragment(), View.OnClickListener {
         var leftover = checkLeftover(total, eachPersonPays.toDouble(), splitBetweenCount.toInt())
         if (leftover > 0) {
             leftover_alert_field.visibility = View.VISIBLE
-            leftover_alert_field.text = "Uneven split. There is an overpayment of ¢$leftover cents"
+            leftover_alert_field.text = "* can't be split evenly - Someone can pay ¢$leftover cents less"
         } else if (leftover < 0) {
             leftover_alert_field.visibility = View.VISIBLE
             leftover = leftover.absoluteValue
-            leftover_alert_field.text = "Uneven split. Someone has to pay ¢$leftover extra"
+            leftover_alert_field.text = "* can't be split evenly - Someone has to pay ¢$leftover extra"
         }
-
     }
 
     fun checkLeftover(total: Double, eachPersonPays: Double, splitBetweenCount: Int): Int {
