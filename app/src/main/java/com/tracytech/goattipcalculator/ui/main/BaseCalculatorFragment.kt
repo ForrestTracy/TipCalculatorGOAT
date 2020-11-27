@@ -56,6 +56,7 @@ class BaseCalculatorFragment(private var calculatorType: CalculatorType) : Fragm
         when (calculatorType) {
             CalculatorType.FOOD -> tabs?.setSelectedTabIndicatorColor(resources.getColor(R.color.blue4))
             CalculatorType.HAIR -> tabs?.setSelectedTabIndicatorColor(resources.getColor(R.color.red4))
+            CalculatorType.RIDE -> tabs?.setSelectedTabIndicatorColor(resources.getColor(R.color.green3))
         }
     }
 
@@ -63,7 +64,7 @@ class BaseCalculatorFragment(private var calculatorType: CalculatorType) : Fragm
         when (calculatorType) {
             CalculatorType.FOOD -> setupFoodButtons(view)
             CalculatorType.HAIR -> setupHairButtons(view)
-//            CalculatorType.RIDE -> setupRideButtons(view)
+            CalculatorType.RIDE -> setupRideButtons(view)
         }
 
         (view.findViewById(R.id.superb_button) as Button).setOnClickListener(this)
@@ -89,12 +90,12 @@ class BaseCalculatorFragment(private var calculatorType: CalculatorType) : Fragm
         (view.findViewById(R.id.poor_button) as Button).setBackgroundResource(R.drawable.poor_button_hair)
     }
 
-//    private fun setupRideButtons(view: View) {
-//        (view.findViewById(R.id.superb_button) as Button).setBackgroundResource(R.drawable.superb_button_ride)
-//        (view.findViewById(R.id.good_button) as Button).setBackgroundResource(R.drawable.good_button_ride)
-//        (view.findViewById(R.id.fair_button) as Button).setBackgroundResource(R.drawable.fair_button_ride)
-//        (view.findViewById(R.id.poor_button) as Button).setBackgroundResource(R.drawable.poor_button_ride)
-//    }
+    private fun setupRideButtons(view: View) {
+        (view.findViewById(R.id.superb_button) as Button).setBackgroundResource(R.drawable.superb_button_ride)
+        (view.findViewById(R.id.good_button) as Button).setBackgroundResource(R.drawable.good_button_ride)
+        (view.findViewById(R.id.fair_button) as Button).setBackgroundResource(R.drawable.fair_button_ride)
+        (view.findViewById(R.id.poor_button) as Button).setBackgroundResource(R.drawable.poor_button_ride)
+    }
 
     private fun setupInputs(view: View) {
         baseBillInput = view.findViewById(R.id.base_bill_input)

@@ -29,7 +29,8 @@ class SectionsPagerAdapter(private val context: Context, fm: FragmentManager, li
         return when (position) {
             0 -> BaseCalculatorFragment(CalculatorType.FOOD)
             1 -> BaseCalculatorFragment(CalculatorType.HAIR)
-            else -> PlaceholderFragment.newInstance(position + 1)
+            2 -> BaseCalculatorFragment(CalculatorType.RIDE)
+            else -> BaseCalculatorFragment(CalculatorType.FOOD)
 
         }
     }
