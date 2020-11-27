@@ -12,7 +12,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:context=".ui.main.FoodFragment"
+            tools:context=".ui.main.BaseCalculatorFragment"
             android:background="#efedf5">
 
             <LinearLayout
@@ -79,7 +79,7 @@
                 <Button
                     android:id="@+id/superb_button"
                     android:text=""
-                    android:background="@drawable/superb_button"
+                    android:background="@drawable/superb_button_food"
                     android:layout_height="70dp"
                     android:layout_width="0dp"
                     android:layout_weight="1"
@@ -88,7 +88,7 @@
                 <Button
                     android:id="@+id/good_button"
                     android:text=""
-                    android:background="@drawable/good_button"
+                    android:background="@drawable/good_button_food"
                     android:layout_height="70dp"
                     android:layout_width="0dp"
                     android:layout_weight="1"
@@ -97,7 +97,7 @@
                 <Button
                     android:id="@+id/fair_button"
                     android:text=""
-                    android:background="@drawable/fair_button"
+                    android:background="@drawable/fair_button_food"
                     android:layout_height="70dp"
                     android:layout_width="0dp"
                     android:layout_weight="1"
@@ -106,7 +106,7 @@
                 <Button
                     android:id="@+id/poor_button"
                     android:text=""
-                    android:background="@drawable/poor_button"
+                    android:background="@drawable/poor_button_food"
                     android:layout_height="70dp"
                     android:layout_width="0dp"
                     android:layout_weight="1"
@@ -267,7 +267,7 @@
                     android:layout_marginLeft="10dp"
                     android:id="@+id/no_split_button"
                     android:text=""
-                    android:background="@drawable/no_focused"
+                    android:background="@drawable/no_focused_food"
                     style="?android:attr/borderlessButtonStyle"
                     android:layout_height="70dp"
                     android:layout_width="70dp" />

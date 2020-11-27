@@ -12,11 +12,12 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayout
 import com.tracytech.goattipcalculator.R
-import kotlinx.android.synthetic.main.fragment_food.*
+import com.tracytech.goattipcalculator.enums.CalculatorType
+import kotlinx.android.synthetic.main.fragment_base_calculator.*
 import kotlin.math.absoluteValue
 import kotlin.math.round
 
-class FoodFragment : Fragment(), View.OnClickListener {
+class BaseCalculatorFragment(private var calculatorType: CalculatorType) : Fragment(), View.OnClickListener {
 
     private lateinit var baseBillInput: TextView
     private lateinit var calculatedTotal: TextView
@@ -32,47 +33,68 @@ class FoodFragment : Fragment(), View.OnClickListener {
     private var baseBill : Double = 0.00
     private var tipPercentage : Double = 0.00
     private var tipDollars : Double = 0.00
-
-    companion object { @JvmStatic fun newInstance() = FoodFragment() }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
+    
     override fun onCreateView (
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view: View = inflater.inflate(R.layout.fragment_food, container, false)
+        val view: View = inflater.inflate(R.layout.fragment_base_calculator, container, false)
         setUpButtons(view)
         setupInputs(view)
         setupListeners()
+        if (calculatorType == CalculatorType.HAIR) {
+            (view.findViewById(R.id.split_title) as TextView).visibility = View.GONE
+            (view.findViewById(R.id.no_split_button) as TextView).visibility = View.GONE
+            (view.findViewById(R.id.yes_split_button) as TextView).visibility = View.GONE
+        }
         return view
     }
 
     override fun onResume() {
         super.onResume()
         val tabs: TabLayout? = (context as Activity).findViewById(R.id.tabs)
-        tabs?.setSelectedTabIndicatorColor(resources.getColor(R.color.blue4))
+        when (calculatorType) {
+            CalculatorType.FOOD -> tabs?.setSelectedTabIndicatorColor(resources.getColor(R.color.blue4))
+            CalculatorType.HAIR -> tabs?.setSelectedTabIndicatorColor(resources.getColor(R.color.red4))
+        }
     }
 
     private fun setUpButtons(view: View) {
-        val superbBtn: Button = view.findViewById(R.id.superb_button)
-        val goodBtn: Button = view.findViewById(R.id.good_button)
-        val fairBtn: Button = view.findViewById(R.id.fair_button)
-        val poorBtn: Button = view.findViewById(R.id.poor_button)
-        val customBtn: Button = view.findViewById(R.id.custom_button)
-        val noSplitBtn: Button = view.findViewById(R.id.no_split_button)
-        val yesSplitBtn: Button = view.findViewById(R.id.yes_split_button)
+        when (calculatorType) {
+            CalculatorType.FOOD -> setupFoodButtons(view)
+            CalculatorType.HAIR -> setupHairButtons(view)
+//            CalculatorType.RIDE -> setupRideButtons(view)
+        }
 
-        superbBtn.setOnClickListener(this)
-        goodBtn.setOnClickListener(this)
-        fairBtn.setOnClickListener(this)
-        poorBtn.setOnClickListener(this)
-        customBtn.setOnClickListener(this)
-        noSplitBtn.setOnClickListener(this)
-        yesSplitBtn.setOnClickListener(this)
+        (view.findViewById(R.id.superb_button) as Button).setOnClickListener(this)
+        (view.findViewById(R.id.good_button) as Button).setOnClickListener(this)
+        (view.findViewById(R.id.superb_button) as Button).setOnClickListener(this)
+        (view.findViewById(R.id.poor_button) as Button).setOnClickListener(this)
+        (view.findViewById(R.id.custom_button) as Button).setOnClickListener(this)
+        (view.findViewById(R.id.yes_split_button) as Button).setOnClickListener(this)
+        (view.findViewById(R.id.no_split_button) as Button).setOnClickListener(this)
     }
+
+    private fun setupFoodButtons(view: View) {
+        (view.findViewById(R.id.superb_button) as Button).setBackgroundResource(R.drawable.superb_button_food)
+        (view.findViewById(R.id.good_button) as Button).setBackgroundResource(R.drawable.good_button_food)
+        (view.findViewById(R.id.fair_button) as Button).setBackgroundResource(R.drawable.fair_button_food)
+        (view.findViewById(R.id.poor_button) as Button).setBackgroundResource(R.drawable.poor_button_food)
+    }
+
+    private fun setupHairButtons(view: View) {
+        (view.findViewById(R.id.superb_button) as Button).setBackgroundResource(R.drawable.superb_button_hair)
+        (view.findViewById(R.id.good_button) as Button).setBackgroundResource(R.drawable.good_button_hair)
+        (view.findViewById(R.id.fair_button) as Button).setBackgroundResource(R.drawable.fair_button_hair)
+        (view.findViewById(R.id.poor_button) as Button).setBackgroundResource(R.drawable.poor_button_hair)
+    }
+
+//    private fun setupRideButtons(view: View) {
+//        (view.findViewById(R.id.superb_button) as Button).setBackgroundResource(R.drawable.superb_button_ride)
+//        (view.findViewById(R.id.good_button) as Button).setBackgroundResource(R.drawable.good_button_ride)
+//        (view.findViewById(R.id.fair_button) as Button).setBackgroundResource(R.drawable.fair_button_ride)
+//        (view.findViewById(R.id.poor_button) as Button).setBackgroundResource(R.drawable.poor_button_ride)
+//    }
 
     private fun setupInputs(view: View) {
         baseBillInput = view.findViewById(R.id.base_bill_input)
@@ -209,7 +231,7 @@ class FoodFragment : Fragment(), View.OnClickListener {
         if (view == no_split_button) {
             if (!splittingBill) return
             splittingBill = false
-            no_split_button.setBackgroundResource(R.drawable.no_focused)
+            no_split_button.setBackgroundResource(R.drawable.no_focused_food)
             yes_split_button.setBackgroundResource(R.drawable.yes_unfocused)
             split_bill_wrapper.visibility = View.INVISIBLE // still takes up layout space vs GONE
         }
@@ -218,7 +240,7 @@ class FoodFragment : Fragment(), View.OnClickListener {
             populateEachPersonTotals()
             splittingBill = true
             no_split_button.setBackgroundResource(R.drawable.no_unfocused)
-            yes_split_button.setBackgroundResource(R.drawable.yes_focused)
+            yes_split_button.setBackgroundResource(R.drawable.yes_focused_food)
             splitBetweenInput.requestFocus()
             split_bill_wrapper.visibility = View.VISIBLE
         }

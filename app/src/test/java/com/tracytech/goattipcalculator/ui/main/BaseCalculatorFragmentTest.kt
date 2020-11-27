@@ -1,11 +1,12 @@
 package com.tracytech.goattipcalculator.ui.main
 
+import com.tracytech.goattipcalculator.enums.CalculatorType
 import org.junit.Assert.*
 import org.junit.Test
 
-internal class FoodFragmentTest {
+internal class BaseCalculatorFragmentTest {
 
-    private val foodFragment = FoodFragment()
+    private val foodFragment = BaseCalculatorFragment(CalculatorType.FOOD)
 
     @Test fun formatDecimals_noDecimals() {
         // given

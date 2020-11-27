@@ -10,7 +10,7 @@ FEATURES TODO:
 - save app prev states to look through old bills
 - ** DONE ** split RIDE/FOOD between a number of people
 - pop up info button to show how/why % for different service quality are decided
-- place ads
+- place ads into pop up
 
 SOMEDAY
 - email receipts
