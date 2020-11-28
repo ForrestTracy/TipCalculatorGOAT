@@ -69,7 +69,7 @@ class BaseCalculatorFragment(private var calculatorType: CalculatorType) : Fragm
 
         (view.findViewById(R.id.superb_button) as Button).setOnClickListener(this)
         (view.findViewById(R.id.good_button) as Button).setOnClickListener(this)
-        (view.findViewById(R.id.superb_button) as Button).setOnClickListener(this)
+        (view.findViewById(R.id.fair_button) as Button).setOnClickListener(this)
         (view.findViewById(R.id.poor_button) as Button).setOnClickListener(this)
         (view.findViewById(R.id.custom_button) as Button).setOnClickListener(this)
         (view.findViewById(R.id.yes_split_button) as Button).setOnClickListener(this)
@@ -95,6 +95,7 @@ class BaseCalculatorFragment(private var calculatorType: CalculatorType) : Fragm
         (view.findViewById(R.id.good_button) as Button).setBackgroundResource(R.drawable.good_button_ride)
         (view.findViewById(R.id.fair_button) as Button).setBackgroundResource(R.drawable.fair_button_ride)
         (view.findViewById(R.id.poor_button) as Button).setBackgroundResource(R.drawable.poor_button_ride)
+        (view.findViewById(R.id.no_split_button) as Button).setBackgroundResource(R.drawable.no_focused_ride)
     }
 
     private fun setupInputs(view: View) {
@@ -232,7 +233,8 @@ class BaseCalculatorFragment(private var calculatorType: CalculatorType) : Fragm
         if (view == no_split_button) {
             if (!splittingBill) return
             splittingBill = false
-            no_split_button.setBackgroundResource(R.drawable.no_focused_food)
+            val noBackground = if (calculatorType == CalculatorType.FOOD) R.drawable.no_focused_food else R.drawable.no_focused_ride
+            no_split_button.setBackgroundResource(noBackground)
             yes_split_button.setBackgroundResource(R.drawable.yes_unfocused)
             split_bill_wrapper.visibility = View.INVISIBLE // still takes up layout space vs GONE
         }
@@ -241,7 +243,8 @@ class BaseCalculatorFragment(private var calculatorType: CalculatorType) : Fragm
             populateEachPersonTotals()
             splittingBill = true
             no_split_button.setBackgroundResource(R.drawable.no_unfocused)
-            yes_split_button.setBackgroundResource(R.drawable.yes_focused_food)
+            val yesBackground = if (calculatorType == CalculatorType.FOOD) R.drawable.yes_focused_food else R.drawable.yes_focused_ride
+            yes_split_button.setBackgroundResource(yesBackground)
             splitBetweenInput.requestFocus()
             split_bill_wrapper.visibility = View.VISIBLE
         }
