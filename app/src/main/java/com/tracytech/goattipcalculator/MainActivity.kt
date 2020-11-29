@@ -1,13 +1,14 @@
 package com.tracytech.goattipcalculator
 
 import android.os.Bundle
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.tabs.TabLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import com.tracytech.goattipcalculator.ui.main.InfoPopup
 import com.tracytech.goattipcalculator.ui.main.SectionsPagerAdapter
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -28,12 +29,11 @@ class MainActivity : AppCompatActivity() {
             tab.text = (resources.getString(TAB_TITLES[position]))
         }.attach()
 
-        // TODO maybe repurpose this for info about each tab
-//        val fab: FloatingActionButton = findViewById(R.id.fab)
-//
-//        fab.setOnClickListener { view ->
-//            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                    .setAction("Action", null).show()
-//        }
+        val floatingInfoButton: FloatingActionButton = findViewById(R.id.floating_info_button)
+
+        floatingInfoButton.setOnClickListener { view ->
+            val infoPopup = InfoPopup()
+            infoPopup.showPopupWindow(view, this.window.decorView.width, this.window.decorView.height)
+        }
     }
 }

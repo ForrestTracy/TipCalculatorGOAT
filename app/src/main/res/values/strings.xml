@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Greatest Tip Calculator of All Time</string>
-    <string name="food_tab_text">Food</string>
-    <string name="hair_tab_text">Hair</string>
-    <string name="ride_tab_text">Ride</string>
+    <string name="food_tab_text">food</string>
+    <string name="hair_tab_text">hair</string>
+    <string name="ride_tab_text">ride</string>
     <string name="base_bill_text">bill  $</string>
     <string name="service_quality_text">service quality</string>
     <string name="total_title">total&#160;&#160;&#160;</string>
@@ -11,5 +11,7 @@
     <string name="tip_title">tip</string>
     <string name="default_total_text">$ _ . _ _</string>
     <string name="initial_zero">0.00</string>
+    <string name="popup_tip_information">This is a bunch of information about how I researched and set the tip percentages.</string>
+    <string name="popup_ad_information">Oh yeah. If you want to support me as a developer then please watch this ad.</string>
 
 </resources>
