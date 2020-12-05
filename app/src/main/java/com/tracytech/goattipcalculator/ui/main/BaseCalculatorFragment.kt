@@ -1,6 +1,7 @@
 package com.tracytech.goattipcalculator.ui.main
 
 import android.app.Activity
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -10,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.tabs.TabLayout
 import com.tracytech.goattipcalculator.R
 import com.tracytech.goattipcalculator.enums.CalculatorType
@@ -53,10 +55,25 @@ class BaseCalculatorFragment(private var calculatorType: CalculatorType) : Fragm
     override fun onResume() {
         super.onResume()
         val tabs: TabLayout? = (context as Activity).findViewById(R.id.tabs)
+        val floatingInfoButton: FloatingActionButton = (context as Activity).findViewById(R.id.floating_info_button)
         when (calculatorType) {
-            CalculatorType.FOOD -> tabs?.setSelectedTabIndicatorColor(resources.getColor(R.color.blue4))
-            CalculatorType.HAIR -> tabs?.setSelectedTabIndicatorColor(resources.getColor(R.color.red4))
-            CalculatorType.RIDE -> tabs?.setSelectedTabIndicatorColor(resources.getColor(R.color.green3))
+            CalculatorType.FOOD -> {
+                tabs?.setSelectedTabIndicatorColor(resources.getColor(R.color.blue4))
+                floatingInfoButton.setBackgroundTintList(ColorStateList.valueOf(resources.getColor(R.color.blue4)))
+                floatingInfoButton.setBackgroundResource(R.drawable.info_button)
+            }
+            CalculatorType.HAIR -> {
+                tabs?.setSelectedTabIndicatorColor(resources.getColor(R.color.red4))
+                floatingInfoButton.setBackgroundTintList(ColorStateList.valueOf(resources.getColor(R.color.red4)))
+//                floatingInfoButton.setBackgroundResource(R.drawable.info_button)
+                floatingInfoButton.setImageResource(R.drawable.no_unfocused) //<-- this works
+//                floatingInfoButton.set
+            }
+            CalculatorType.RIDE -> {
+                tabs?.setSelectedTabIndicatorColor(resources.getColor(R.color.green3))
+                floatingInfoButton.setBackgroundTintList(ColorStateList.valueOf(resources.getColor(R.color.green3)))
+                floatingInfoButton.setImageResource(R.drawable.star_info_button_ride)
+            }
         }
     }
 

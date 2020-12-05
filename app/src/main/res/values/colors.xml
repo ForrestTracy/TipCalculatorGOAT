@@ -19,8 +19,11 @@
 </resources>
 
 <!--
-LIGHT GREY BACKGROUND
+LIGHT GREY MAIN BODY BACKGROUND
 #efedf5
+
+STAR BODY = colorPrimaryDark
+#262626
 
 FOOD FRAG COLORS
 - buttons
