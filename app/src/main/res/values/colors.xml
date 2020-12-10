@@ -22,7 +22,7 @@
 LIGHT GREY MAIN BODY BACKGROUND
 #efedf5
 
-STAR BODY = colorPrimaryDark
+INFO BUTTON STAR BODY = colorPrimaryDark
 #262626
 
 FOOD FRAG COLORS
@@ -39,7 +39,7 @@ superb = #d63c3c
 good   = #de6262
 fair   = #e68a8a
 poor   = #eeb1b1
-- tab underline & yes/no button circle
+- tab underline & yes/no button circle  red4 / #d63c3c
 
 
 RIDE FRAG COLORS -> https://www.color-hex.com/color/3b7828

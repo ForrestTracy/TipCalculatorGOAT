@@ -48,11 +48,12 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floating_info_button"
+        app:maxImageSize="52dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:layout_marginTop="130dp"
         android:layout_marginEnd="10dp"
-        app:srcCompat="@drawable/info_button" />
+        app:srcCompat="@drawable/more_circle" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

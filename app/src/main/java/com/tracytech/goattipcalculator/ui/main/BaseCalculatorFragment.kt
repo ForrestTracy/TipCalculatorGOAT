@@ -59,20 +59,21 @@ class BaseCalculatorFragment(private var calculatorType: CalculatorType) : Fragm
         when (calculatorType) {
             CalculatorType.FOOD -> {
                 tabs?.setSelectedTabIndicatorColor(resources.getColor(R.color.blue4))
-                floatingInfoButton.setBackgroundTintList(ColorStateList.valueOf(resources.getColor(R.color.blue4)))
-                floatingInfoButton.setBackgroundResource(R.drawable.info_button)
+                floatingInfoButton.backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.blue4))
+//                floatingInfoButton.setImageResource(R.drawable.more_button_food)
+//                floatingInfoButton.setImageResource(R.drawable.star_info_button_food)
             }
             CalculatorType.HAIR -> {
                 tabs?.setSelectedTabIndicatorColor(resources.getColor(R.color.red4))
-                floatingInfoButton.setBackgroundTintList(ColorStateList.valueOf(resources.getColor(R.color.red4)))
-//                floatingInfoButton.setBackgroundResource(R.drawable.info_button)
-                floatingInfoButton.setImageResource(R.drawable.no_unfocused) //<-- this works
-//                floatingInfoButton.set
+                floatingInfoButton.backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.red4))
+//                floatingInfoButton.setImageResource(R.drawable.more_button_hair)
+//                floatingInfoButton.setImageResource(R.drawable.star_info_button_hair)
             }
             CalculatorType.RIDE -> {
                 tabs?.setSelectedTabIndicatorColor(resources.getColor(R.color.green3))
-                floatingInfoButton.setBackgroundTintList(ColorStateList.valueOf(resources.getColor(R.color.green3)))
-                floatingInfoButton.setImageResource(R.drawable.star_info_button_ride)
+                floatingInfoButton.backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.green3))
+//                floatingInfoButton.setImageResource(R.drawable.more_button_ride)
+//                floatingInfoButton.setImageResource(R.drawable.star_info_button_ride)
             }
         }
     }
