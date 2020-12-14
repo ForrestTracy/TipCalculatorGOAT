@@ -1,0 +1,11 @@
+google.com, pub-6647836227802115, DIRECT, f08c47fec0942fa0
+
+Your Publisher ID: pub-6647836227802115
+UnitId: ca-app-pub-6647836227802115~5483774706
+goat-tip-add-banner  <-- two "d"s
+ca-app-pub-6647836227802115~5483774706
+ca-app-pub-6647836227802115/8874007765
+
+goat-tip-ad-interstitial
+ca-app-pub-6647836227802115~5483774706
+ca-app-pub-6647836227802115/9657989288

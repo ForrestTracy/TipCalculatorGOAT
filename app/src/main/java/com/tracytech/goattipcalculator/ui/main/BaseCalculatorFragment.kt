@@ -11,6 +11,8 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.tabs.TabLayout
 import com.tracytech.goattipcalculator.R
@@ -49,6 +51,10 @@ class BaseCalculatorFragment(private var calculatorType: CalculatorType) : Fragm
             (view.findViewById(R.id.no_split_button) as TextView).visibility = View.GONE
             (view.findViewById(R.id.yes_split_button) as TextView).visibility = View.GONE
         }
+        val mAdView = view.findViewById<AdView>(R.id.adView)
+//        mAdView = findViewById(R.id.adView)
+        val adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
         return view
     }
 

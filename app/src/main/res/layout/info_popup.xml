@@ -7,15 +7,26 @@
     android:background="#efedf5"
     android:gravity="center">
     <ScrollView
+        android:backgroundTint="@color/blue4"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
         <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="10dp"
             android:orientation="vertical">
+
+            <com.google.android.gms.ads.AdView
+                xmlns:ads="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/popupAdView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                ads:adSize="BANNER"
+                ads:adUnitId="ca-app-pub-3940256099942544/6300978111" />
+<!--                TEST AD ^-->
+
+<!--                LIVE-->
+<!--                ads:adUnitId="ca-app-pub-6647836227802115~5483774706" />-->
 
             <TextView
                 android:id="@+id/popup_ad_text"
