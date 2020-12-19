@@ -28,6 +28,7 @@ class BaseCalculatorFragment(private var calculatorType: CalculatorType) : Fragm
     private lateinit var eachPersonPaysCalculated: TextView
     private lateinit var eachPersonTotalBreakdown: TextView
     private lateinit var eachPersonTipBreakdown: TextView
+    private var tabPosition = 0
     private lateinit var splitBetweenInput: TextView
     private lateinit var tipPercentageInput: TextView
     private lateinit var tipDollarsInput: TextView
@@ -51,10 +52,6 @@ class BaseCalculatorFragment(private var calculatorType: CalculatorType) : Fragm
             (view.findViewById(R.id.no_split_button) as TextView).visibility = View.GONE
             (view.findViewById(R.id.yes_split_button) as TextView).visibility = View.GONE
         }
-        val mAdView = view.findViewById<AdView>(R.id.adView)
-//        mAdView = findViewById(R.id.adView)
-        val adRequest = AdRequest.Builder().build()
-        mAdView.loadAd(adRequest)
         return view
     }
 
@@ -64,22 +61,19 @@ class BaseCalculatorFragment(private var calculatorType: CalculatorType) : Fragm
         val floatingInfoButton: FloatingActionButton = (context as Activity).findViewById(R.id.floating_info_button)
         when (calculatorType) {
             CalculatorType.FOOD -> {
+                tabPosition = 0
                 tabs?.setSelectedTabIndicatorColor(resources.getColor(R.color.blue4))
                 floatingInfoButton.backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.blue4))
-//                floatingInfoButton.setImageResource(R.drawable.more_button_food)
-//                floatingInfoButton.setImageResource(R.drawable.star_info_button_food)
             }
             CalculatorType.HAIR -> {
+                tabPosition = 1
                 tabs?.setSelectedTabIndicatorColor(resources.getColor(R.color.red4))
                 floatingInfoButton.backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.red4))
-//                floatingInfoButton.setImageResource(R.drawable.more_button_hair)
-//                floatingInfoButton.setImageResource(R.drawable.star_info_button_hair)
             }
             CalculatorType.RIDE -> {
+                tabPosition = 2
                 tabs?.setSelectedTabIndicatorColor(resources.getColor(R.color.green3))
                 floatingInfoButton.backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.green3))
-//                floatingInfoButton.setImageResource(R.drawable.more_button_ride)
-//                floatingInfoButton.setImageResource(R.drawable.star_info_button_ride)
             }
         }
     }
