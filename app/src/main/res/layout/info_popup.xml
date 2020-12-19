@@ -12,22 +12,20 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent" >
         <LinearLayout
-            android:background="@color/browser_actions_bg_grey"
+            android:background="#efedf5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:layout_margin="5dp"
             android:orientation="vertical">
 
-            <com.google.android.gms.ads.AdView
-                xmlns:ads="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/adViewBanner"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                ads:adSize="BANNER"
-                ads:adUnitId="ca-app-pub-3940256099942544/6300978111" />
-<!--                TEST AD ^^   real  V-->
-<!--                ads:adUnitId="ca-app-pub-6647836227802115~5483774706" />-->
+            <Button
+                android:id="@+id/show_interstitial_ad_button"
+                android:text=""
+                android:background="@drawable/yes_focused_food"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_height="60dp"
+                android:layout_width="60dp" />
 
             <TextView
                 android:id="@+id/popup_ad_text"
@@ -49,6 +47,16 @@
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:padding="10dp"/>
+
+            <com.google.android.gms.ads.AdView
+                xmlns:ads="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/adViewBanner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                ads:adSize="BANNER"
+                ads:adUnitId="ca-app-pub-3940256099942544/6300978111" />
+            <!--                TEST AD ^^   real  V-->
+            <!--                ads:adUnitId="ca-app-pub-6647836227802115~5483774706" />-->
 
         </LinearLayout>
     </ScrollView>

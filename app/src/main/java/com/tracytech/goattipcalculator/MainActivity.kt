@@ -3,7 +3,6 @@ package com.tracytech.goattipcalculator
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
-import com.google.android.gms.ads.MobileAds
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -30,14 +29,10 @@ class MainActivity : AppCompatActivity() {
             tab.text = (resources.getString(TAB_TITLES[position]))
         }.attach()
 
-        // for ads
-        MobileAds.initialize(this) {}
-
         val floatingInfoButton: FloatingActionButton = findViewById(R.id.floating_info_button)
-
         floatingInfoButton.setOnClickListener { view ->
             val infoPopup = InfoPopup()
-            infoPopup.showPopupWindow(view, this.window.decorView.width, this.window.decorView.height)
+            infoPopup.showPopupWindow(this, view, this.window.decorView.width, this.window.decorView.height)
         }
     }
 

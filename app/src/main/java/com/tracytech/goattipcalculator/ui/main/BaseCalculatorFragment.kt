@@ -11,8 +11,6 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.tabs.TabLayout
 import com.tracytech.goattipcalculator.R

@@ -11,7 +11,8 @@
     <string name="tip_title">tip</string>
     <string name="default_total_text">$ _ . _ _</string>
     <string name="initial_zero">0.00</string>
-    <string name="popup_tip_information">This is a bunch of information about how I researched and set the tip percentages.</string>
-    <string name="popup_ad_information">Oh yeah. If you want to support me as a developer then please watch this ad.</string>
+    <string name="popup_tip_information">I set the tip rate ranges for each service (food, hair, and ride sharing) according to standard tip rates in the U.S.
+    I hope you find this helpful, but I made sure that setting a custom rate is easy, too, if you prefer to use that.</string>
+    <string name="popup_ad_information">^ Please click the "yes" button for a short ad and I will earn some money from this app. Thanks!</string>
 
 </resources>
